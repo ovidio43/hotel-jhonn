@@ -37,7 +37,7 @@ class TrabajadorController extends \BaseController {
         $ObjTrabajador->email = $input['email'];
         $ObjTrabajador->acitvo = 1;
         $validation = Validator::make($input, $this->rules, $this->message);
-        if (!$validation->fails()) {
+        if (!$validation-Redirect>fails()) {
             $ObjTrabajador->save();
             return Redirect::to('trabajador')->with('Trabajador', Input::all());
         } else {

@@ -21,7 +21,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a href="{{Request::url()}}" class="navbar-brand">
+                    <a href="#" class="navbar-brand">
                         <span class="glyphicon glyphicon-home"></span>
                         <span class="glyphicon-class">HOTEL</span>
                     </a>
@@ -43,9 +43,9 @@
             <div class="row">
                 <div class="col-sm-2">
                     <ul class="nav nav-pills nav-stacked">
-                        <li class="active"><a href="#">testing</a></li>
-                        <li><a href="#">testing</a></li>
-                        <li><a href="#">testing</a></li>
+                        <li <?php if (Request::is('usuario')) {echo 'class="active"';} ?> ><a href="{{URL::to('usuario')}}">Usuario</a></li>
+                        <li <?php if (Request::is('tipo-usuario')) {echo 'class="active"';} ?>><a href="{{URL::to('tipo-usuario')}}">Tipo Usuario</a></li>
+                        <li <?php if (Request::is('trabajador')) {echo 'class="active"';} ?>><a href="{{URL::to('trabajador')}}">Trabajador</a></li>
                     </ul>
                 </div>
                 <div class="col-sm-10">                    
