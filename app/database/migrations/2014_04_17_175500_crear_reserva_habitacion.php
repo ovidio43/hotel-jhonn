@@ -11,7 +11,7 @@ class CrearDetalleReservaHabitacion extends Migration {
      * @return void
      */
     public function up() {
-        Schema::create('detalle_reserva_habitacion', function(Blueprint $table) {
+        Schema::create('reserva_habitacion', function(Blueprint $table) {
             $table->increments('id');
             $table->integer('id_reserva')->unsigned();
             $table->foreign('id_reserva')->references('id')->on('reserva')->onDelete('cascade');

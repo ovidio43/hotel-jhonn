@@ -56,15 +56,17 @@ class UsuarioController extends \BaseController {
         $ObjUsuario = Usuario::find($id);
         if (Input::has('clave')) {
             $ObjUsuario->clave = Hash::make($input['clave']);
-        }        
+        }
         $ObjUsuario->id_trabajador = $input['id_trabajador'];
-        $ObjUsuario->id_tipo_usuario = $input['id_tipo_usuario'];        
+        $ObjUsuario->id_tipo_usuario = $input['id_tipo_usuario'];
+
         $curretRules = array(
             'clave' => 'min:6',
             'id_trabajador' => 'required',
-            'id_tipo_usuario' => 'required',
+            'id_tipo_usuario' => 'required'
         );
         $validation = Validator::make($input, $curretRules, $this->message);
+
         if (!$validation->fails()) {
             $ObjUsuario->save();
             return Redirect::to('usuario')->with('Usuario', $input);

@@ -18,7 +18,7 @@ class CrearUsuario extends Migration {
             $table->date('fecha_creacion');
             $table->string('acitvo', 1);
             $table->integer('id_trabajador')->unsigned();
-            $table->foreign('id_trabajador')->references('id')->on('usuario')->onDelete('cascade');
+            $table->foreign('id_trabajador')->references('id')->on('trabajador')->onDelete('cascade');
             $table->integer('id_tipo_usuario')->unsigned();
             $table->foreign('id_tipo_usuario')->references('id')->on('tipo_usuario')->onDelete('cascade');
             $table->timestamps();
