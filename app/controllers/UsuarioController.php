@@ -4,7 +4,7 @@ class UsuarioController extends \BaseController {
 
     private $rules = array(
         'login' => 'required|unique:usuario',
-        'clave' => 'required|min:6',
+        'password' => 'required|min:6',
         'id_trabajador' => 'required',
         'id_tipo_usuario' => 'required',
     );
@@ -13,6 +13,14 @@ class UsuarioController extends \BaseController {
         'min' => 'Acepta 6 carácteres o mas.',
         'unique' => 'El usuario ya existe.'
     );
+
+    public function __construct() {
+        $this->beforeFilter(function() {
+            if (!Auth::check()) {
+                return Redirect::to('/');
+            }
+        });
+    }
 
     public function index() {
         $ObjUsuario = Usuario::all();
@@ -27,7 +35,8 @@ class UsuarioController extends \BaseController {
         $ObjUsuario = new Usuario;
         $input = Input::all();
         $ObjUsuario->login = $input['login'];
-        $ObjUsuario->clave = Hash::make($input['clave']);
+        $ObjUsuario->password = Hash::make($input['password']);
+//        $ObjUsuario->password =$input['password'];
         $ObjUsuario->fecha_creacion = date('Y-m-d');
         $ObjUsuario->id_trabajador = $input['id_trabajador'];
         $ObjUsuario->id_tipo_usuario = $input['id_tipo_usuario'];
@@ -54,14 +63,15 @@ class UsuarioController extends \BaseController {
     public function update($id) {
         $input = Input::all();
         $ObjUsuario = Usuario::find($id);
-        if (Input::has('clave')) {
-            $ObjUsuario->clave = Hash::make($input['clave']);
+        if (Input::has('password')) {
+            $ObjUsuario->password = Hash::make($input['password']);
+//            $ObjUsuario->password = $input['password'];
         }
         $ObjUsuario->id_trabajador = $input['id_trabajador'];
         $ObjUsuario->id_tipo_usuario = $input['id_tipo_usuario'];
 
         $curretRules = array(
-            'clave' => 'min:6',
+            'password' => 'min:6',
             'id_trabajador' => 'required',
             'id_tipo_usuario' => 'required'
         );

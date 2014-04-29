@@ -16,6 +16,14 @@ class TrabajadorController extends \BaseController {
         'email' => 'Email Invalido, (Ej: myemail@dominio.com)'
     );
 
+  public function __construct() {
+        $this->beforeFilter(function() {
+            if (!Auth::check()) {
+                return Redirect::to('/');
+            }
+        });
+    }
+
     public function index() {
         $ObjTrabajador = Trabajador::all();
         return View::make('Trabajador.index')->with('Trabajador', $ObjTrabajador);
@@ -37,7 +45,7 @@ class TrabajadorController extends \BaseController {
         $ObjTrabajador->email = $input['email'];
         $ObjTrabajador->acitvo = 1;
         $validation = Validator::make($input, $this->rules, $this->message);
-        if (!$validation-Redirect>fails()) {
+        if (!$validation - Redirect > fails()) {
             $ObjTrabajador->save();
             return Redirect::to('trabajador')->with('Trabajador', Input::all());
         } else {

@@ -11,10 +11,14 @@
   |
  */
 
-Route::get('/', function() {
-    return View::make('hello');
-});
+//Route::get('/', function() {
+//    return View::make('hello');
+//});
+
 
 Route::resource('tipo-usuario', 'TipoUsuarioController');
 Route::resource('trabajador', 'TrabajadorController');
 Route::resource('usuario', 'UsuarioController');
+
+Route::resource('/', 'LoginController');
+Route::resource('login', 'LoginController');

@@ -6,8 +6,16 @@ class TipoUsuarioController extends \BaseController {
         'nombre' => 'Required'
     );
     private $message = array(
-           'required' => 'Campo Obligatorio',           
+        'required' => 'Campo Obligatorio',
     );
+
+   public function __construct() {
+        $this->beforeFilter(function() {
+            if (!Auth::check()) {
+                return Redirect::to('/');
+            }
+        });
+    }
 
     public function index() {
         $ObjTipoUsuario = TipoUsuario::all();

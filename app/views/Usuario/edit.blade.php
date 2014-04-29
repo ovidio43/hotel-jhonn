@@ -11,10 +11,10 @@ NUEVO USUARIO
     </div>
 </div>
 <div class="form-group">
-    {{Form::label('clave', 'Contraseña',['class'=>'col-sm-3 control-label'])}}
+    {{Form::label('password', 'Contraseña',['class'=>'col-sm-3 control-label'])}}
     <div class="col-sm-4">
-        {{ Form::password('clave',['class'=>'form-control'])}}
-        <span class="error">{{ $errors->first('clave')}}</span>
+        {{ Form::password('password',['class'=>'form-control'])}}
+        <span class="error">{{ $errors->first('password')}}</span>
     </div>
 </div>
 <div class="form-group">
