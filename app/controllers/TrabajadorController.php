@@ -16,7 +16,7 @@ class TrabajadorController extends \BaseController {
         'email' => 'Email Invalido, (Ej: myemail@dominio.com)'
     );
 
-  public function __construct() {
+    public function __construct() {
         $this->beforeFilter(function() {
             if (!Auth::check()) {
                 return Redirect::to('/');
@@ -45,9 +45,9 @@ class TrabajadorController extends \BaseController {
         $ObjTrabajador->email = $input['email'];
         $ObjTrabajador->acitvo = 1;
         $validation = Validator::make($input, $this->rules, $this->message);
-        if (!$validation - Redirect > fails()) {
+        if (!$validation->fails()) {
             $ObjTrabajador->save();
-            return Redirect::to('trabajador')->with('Trabajador', Input::all());
+            return Redirect::to('administracion/trabajador')->with('Trabajador', Input::all());
         } else {
             return Redirect::back()->withErrors($validation);
         }
@@ -77,7 +77,7 @@ class TrabajadorController extends \BaseController {
         $validation = Validator::make($input, $this->rules, $this->message);
         if (!$validation->fails()) {
             $ObjTrabajador->save();
-            return Redirect::to('trabajador')->with('Trabajador', $input);
+            return Redirect::to('administracion/trabajador')->with('Trabajador', $input);
         } else {
             return Redirect::back()->withErrors($validation);
         }
@@ -86,7 +86,7 @@ class TrabajadorController extends \BaseController {
     public function destroy($id) {
         $ObjTrabajador = Trabajador::find($id);
         $ObjTrabajador->delete();
-        return Redirect::to('trabajador');
+        return Redirect::to('administracion/trabajador');
     }
 
 }

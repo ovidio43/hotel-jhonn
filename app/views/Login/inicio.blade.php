@@ -1,13 +1,15 @@
-@extends('layout')
-@section('title')
-INICIO
-@stop
-@section('content')
+@include('header')
 <h1>Bienvenido : 
     <?php
-    $objUsuario = Usuario::find(Auth::user()->id);
-    echo $objUsuario->trabajador->nombre.' '.$objUsuario->trabajador->apellidoP;
+      
+    if (Auth::user()) {
+        $objUsuario = Usuario::find(Auth::user()->id);
+        if ($objUsuario) {
+            echo $objUsuario->trabajador->nombre . ' ' . $objUsuario->trabajador->apellidoP;
+        }
+    }
     ?>
 </h1>
-@stop
+@include('content')
+@include('footer')
 

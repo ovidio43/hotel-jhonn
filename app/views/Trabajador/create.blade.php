@@ -1,9 +1,9 @@
-@extends('layout')
+@extends('administracion')
 @section('title')
 NUEVO TRABAJADOR
 @stop
 @section('content')
-{{ Form::open(array('url' => 'trabajador','class'=>'form-horizontal')) }}
+{{ Form::open(array('url' => 'administracion/trabajador','class'=>'form-horizontal')) }}
 <div class="form-group">
     {{Form::label('nombre', 'Nombre',['class'=>'col-sm-3 control-label'])}}
     <div class="col-sm-4">

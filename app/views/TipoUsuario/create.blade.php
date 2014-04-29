@@ -1,4 +1,4 @@
-@extends('layout')
+@extends('administracion')
 @section('title')
 NUEVO TIPO USUARIO
 @stop

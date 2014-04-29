@@ -1,14 +1,14 @@
-@extends('layout')
+@extends('administracion')
 @section('title')
 NUEVO USUARIO
 @stop
 @section('content')
-{{ Form::open(array('url' => 'usuario','class'=>'form-horizontal')) }}
+{{ Form::open(array('url' => 'administracion/usuario','class'=>'form-horizontal')) }}
 <div class="form-group">
-    {{Form::label('login', 'Login',['class'=>'col-sm-3 control-label'])}}
+    {{Form::label('email', 'Email',['class'=>'col-sm-3 control-label'])}}
     <div class="col-sm-4">
-        {{ Form::text('login','',['class'=>'form-control'])}}
-        <span class="error">{{ $errors->first('login')}}</span>
+        {{ Form::text('email','',['class'=>'form-control'])}}
+        <span class="error">{{ $errors->first('email')}}</span>
     </div>
 </div>
 <div class="form-group">

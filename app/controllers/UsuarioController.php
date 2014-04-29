@@ -3,7 +3,7 @@
 class UsuarioController extends \BaseController {
 
     private $rules = array(
-        'login' => 'required|unique:usuario',
+        'email' => 'required|unique:usuario|email',
         'password' => 'required|min:6',
         'id_trabajador' => 'required',
         'id_tipo_usuario' => 'required',
@@ -34,7 +34,7 @@ class UsuarioController extends \BaseController {
     public function store() {
         $ObjUsuario = new Usuario;
         $input = Input::all();
-        $ObjUsuario->login = $input['login'];
+        $ObjUsuario->email = $input['email'];
         $ObjUsuario->password = Hash::make($input['password']);
 //        $ObjUsuario->password =$input['password'];
         $ObjUsuario->fecha_creacion = date('Y-m-d');
@@ -44,7 +44,7 @@ class UsuarioController extends \BaseController {
         $validation = Validator::make($input, $this->rules, $this->message);
         if (!$validation->fails()) {
             $ObjUsuario->save();
-            return Redirect::to('usuario')->with('Usuario', Input::all());
+            return Redirect::to('administracion/usuario')->with('Usuario', Input::all());
         } else {
             return Redirect::back()->withErrors($validation);
         }
@@ -79,7 +79,7 @@ class UsuarioController extends \BaseController {
 
         if (!$validation->fails()) {
             $ObjUsuario->save();
-            return Redirect::to('usuario')->with('Usuario', $input);
+            return Redirect::to('administracion/usuario')->with('Usuario', $input);
         } else {
             return Redirect::back()->withErrors($validation);
         }
@@ -88,7 +88,7 @@ class UsuarioController extends \BaseController {
     public function destroy($id) {
         $ObjUsuario = Usuario::find($id);
         $ObjUsuario->delete();
-        return Redirect::to('usuario');
+        return Redirect::to('administracion/usuario');
     }
 
 }

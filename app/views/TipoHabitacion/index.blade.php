@@ -1,6 +1,6 @@
 @extends('administracion')
 @section('title')
-LISTADO DE TRABAJADOR
+TIPO HABITACION
 @stop
 @section('content')
 <div class="table-responsive">
@@ -8,7 +8,7 @@ LISTADO DE TRABAJADOR
         <thead>
             <tr>
                 <th colspan="4">
-                    <a href="trabajador/create" title="Nuevo">
+                    <a href="tipo-habitacion/create" title="Nuevo">
                         <span class="label label-primary"><span class="glyphicon glyphicon-plus"></span> Nuevo</span>
                         <span class="label label-default"></span>            
                     </a>
@@ -16,29 +16,21 @@ LISTADO DE TRABAJADOR
             </tr>
             <tr>
                 <th>Nombre</th>
-                <th>Ap. Paterno</th>
-                <th>Ap. Materno</th>
-                <th>CI</th> 
-                <th>Teléfono</th>
-                <th>Dirección</th>
-                <th>Email</th>
+                <th>Descripción</th>
+                <th>Costo</th>
                 <th colspan="2"></th>            
             </tr>
         </thead>
         <tbody>
-            @foreach($Trabajador as $row)
+            @foreach($TipoHabitacion as $row)
             <tr>
                 <td>{{ $row->nombre }}</td>
-                <td>{{ $row->apellidoP }}</td>
-                <td>{{ $row->apellidoM }}</td>
-                <td>{{ $row->ci }}</td>
-                <td>{{ $row->telefono }}</td>
-                <td>{{ $row->direccion }}</td>
-                <td>{{ $row->email }}</td>
-                <td><a href="trabajador/{{$row->id}}/edit" title="Editar"><span class="glyphicon glyphicon-pencil"></span></a></td>
+                <td>{{ $row->descripcion }}</td>    
+                <td>{{ $row->monto}}</td>    
+                <td><a href="tipo-habitacion/{{$row->id}}/edit" title="Editar"><span class="glyphicon glyphicon-pencil"></span></a></td>
                 <td>
                     <a href="#" class="a-delete" title="Eliminar"><span class="glyphicon glyphicon-trash"></span></a>
-                    {{ Form::open(array('url'=>'administracion/trabajador/'.$row->id,'method'=>'delete'))}}                    
+                    {{ Form::open(array('url'=>'administracion/tipo-habitacion/'.$row->id,'method'=>'delete'))}}                         
                     {{ Form::close()}}
                 </td>
             </tr>  

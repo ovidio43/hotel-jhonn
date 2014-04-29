@@ -7,18 +7,21 @@ class LoginController extends \BaseController {
 //        $this->beforeFilter('auth', array('except' => array('index')));
 //        // ...
 //    }
+//    public function __construct() {
+//        $this->beforeFilter(function() {
+//            if (Auth::check()) {
+//               return View::make('Login.inicio');
+//            }
+//        });
+//    }
 
     public function index() {
-        if (Auth::check()) {
-            return View::make('Login.inicio');
-        } else {
-            return View::make('Login.index');
-        }
+        return View::make('Login.index');
     }
 
     public function store() {
         $userdata = array(
-            'login' => Input::get('login'),
+            'email' => Input::get('email'),
             'password' => Input::get('password')
         );
 

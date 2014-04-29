@@ -34,7 +34,7 @@ class TipoUsuarioController extends \BaseController {
         $validation = Validator::make($input, $this->rules, $this->message);
         if (!$validation->fails()) {
             $ObjTipoUsuario->save();
-            return Redirect::to('tipo-usuario')->with('TipoUsuario', Input::all());
+            return Redirect::to('administracion/tipo-usuario')->with('TipoUsuario', Input::all());
         } else {
             return Redirect::back()->withErrors($validation);
         }
@@ -58,7 +58,7 @@ class TipoUsuarioController extends \BaseController {
         $validation = Validator::make($input, $this->rules, $this->message);
         if (!$validation->fails()) {
             $ObjTipoUsuario->save();
-            return Redirect::to('tipo-usuario')->with('TipoUsuario', $input);
+            return Redirect::to('administracion/tipo-usuario')->with('TipoUsuario', $input);
         } else {
             return Redirect::back()->withErrors($validation);
         }
@@ -67,7 +67,7 @@ class TipoUsuarioController extends \BaseController {
     public function destroy($id) {
         $ObjTipoUsuario = TipoUsuario::find($id);
         $ObjTipoUsuario->delete();
-        return Redirect::to('tipo-usuario');
+        return Redirect::to('administracion/tipo-usuario');
     }
 
 }

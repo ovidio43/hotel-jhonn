@@ -1,11 +1,9 @@
-@extends('layout')
+@extends('administracion')
 @section('title')
 LISTADO DE USUARIOS
 @stop
 @section('content')
-{{ Form::open(array('url'=>'login/0','method'=>'delete'))}}
-{{ Form::submit('Cerrar Session',['class'=>'btn btn-default'])}}
-{{ Form::close()}}
+
 <div class="table-responsive">
     <table class="table table-striped">
         <thead>
@@ -18,7 +16,7 @@ LISTADO DE USUARIOS
                 </th>
             </tr>
             <tr>
-                <th>Login</th>
+                <th>Email</th>
                 <th>Fecha Creación</th>                
                 <th>Trabajador</th>                
                 <th>Tipo Usuario</th>                
@@ -28,14 +26,14 @@ LISTADO DE USUARIOS
         <tbody>
             @foreach($Usuario as $row)
             <tr>
-                <td>{{ $row->login }}</td>
+                <td>{{ $row->email }}</td>
                 <td>{{ $row->fecha_creacion }}</td>                
                 <td>{{ Usuario::find($row->id)->trabajador->nombre.' '.Usuario::find($row->id)->trabajador->apellidoP.' '.Usuario::find($row->id)->trabajador->apellidoM }}</td>                
                 <td>{{ Usuario::find($row->id)->tipoUsuario->nombre }}</td>                
                 <td><a href="usuario/{{$row->id}}/edit" title="Editar"><span class="glyphicon glyphicon-pencil"></span></a></td>
                 <td>
                     <a href="#" class="a-delete" title="Eliminar"><span class="glyphicon glyphicon-trash"></span></a>
-                    {{ Form::open(array('url'=>'usuario/'.$row->id,'method'=>'delete'))}}                    
+                    {{ Form::open(array('url'=>'administracion/usuario/'.$row->id,'method'=>'delete'))}}                    
                     {{ Form::close()}}
                 </td>
             </tr>  
