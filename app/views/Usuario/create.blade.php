@@ -1,4 +1,4 @@
-@extends('administracion')
+@extends('sistema')
 @section('title')
 NUEVO USUARIO
 @stop

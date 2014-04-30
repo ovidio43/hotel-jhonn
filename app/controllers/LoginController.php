@@ -2,21 +2,15 @@
 
 class LoginController extends \BaseController {
 
-//    function __construct() {
-//        // ...
-//        $this->beforeFilter('auth', array('except' => array('index')));
-//        // ...
-//    }
-//    public function __construct() {
-//        $this->beforeFilter(function() {
-//            if (Auth::check()) {
-//               return View::make('Login.inicio');
-//            }
-//        });
-//    }
-
     public function index() {
-        return View::make('Login.index');
+//        $this->beforeFilter(function() {
+        if (!Auth::check()) {
+            return View::make('Login.index');
+//                return Redirect::to('/');
+        } else {
+            return View::make('Login.inicio');
+        }
+//        });
     }
 
     public function store() {
@@ -26,7 +20,6 @@ class LoginController extends \BaseController {
         );
 
         if (Auth::attempt($userdata, true)) {
-//            Session::put('userID', Auth::user()->id);
             return View::make('Login.inicio');
         } else {
             return Redirect::back();

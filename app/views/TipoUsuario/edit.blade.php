@@ -1,4 +1,4 @@
-@extends('administracion')
+@extends('sistema')
 @section('title')
 EDITAR TIPO USUARIO
 @stop

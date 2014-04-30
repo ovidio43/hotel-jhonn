@@ -1,7 +1,6 @@
 @include('header')
 <h1>Bienvenido : 
     <?php
-      
     if (Auth::user()) {
         $objUsuario = Usuario::find(Auth::user()->id);
         if ($objUsuario) {
