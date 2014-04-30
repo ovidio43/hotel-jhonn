@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 26-04-2014 a las 00:18:09
+-- Tiempo de generación: 30-04-2014 a las 22:54:23
 -- Versión del servidor: 5.5.27
 -- Versión de PHP: 5.4.7
 
@@ -39,7 +39,14 @@ CREATE TABLE IF NOT EXISTS `cliente` (
   `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=3 ;
+
+--
+-- Volcado de datos para la tabla `cliente`
+--
+
+INSERT INTO `cliente` (`id`, `nombre`, `apellidoP`, `apellidoM`, `telefono`, `direccion`, `email`, `ci`, `acitvo`, `created_at`, `updated_at`) VALUES
+(2, 'laura L.', 'morato', 'rocha', '67804773', 'villa verde', 'aracely@hotmail.com', '342343', '1', '2014-04-30 21:31:11', '2014-04-30 21:31:11');
 
 -- --------------------------------------------------------
 
@@ -57,7 +64,15 @@ CREATE TABLE IF NOT EXISTS `habitacion` (
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`id`),
   KEY `habitacion_id_tipo_habitacion_foreign` (`id_tipo_habitacion`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=4 ;
+
+--
+-- Volcado de datos para la tabla `habitacion`
+--
+
+INSERT INTO `habitacion` (`id`, `nro`, `estado`, `acitvo`, `id_tipo_habitacion`, `created_at`, `updated_at`) VALUES
+(2, 1, 'LIBRE', '1', 2, '2014-04-30 00:52:00', '2014-04-30 01:09:10'),
+(3, 2, 'LIBRE', '1', 3, '2014-04-30 00:53:43', '2014-04-30 01:06:21');
 
 -- --------------------------------------------------------
 
@@ -159,7 +174,15 @@ CREATE TABLE IF NOT EXISTS `tipo_habitacion` (
   `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=4 ;
+
+--
+-- Volcado de datos para la tabla `tipo_habitacion`
+--
+
+INSERT INTO `tipo_habitacion` (`id`, `nombre`, `descripcion`, `monto`, `acitvo`, `created_at`, `updated_at`) VALUES
+(2, 'Matrimonial', 'Habitacion para casados', 200.00, '1', '2014-04-30 00:35:29', '2014-04-30 00:35:29'),
+(3, 'Simple', 'solpara una persona', 100.50, '1', '2014-04-30 00:36:29', '2014-04-30 00:36:29');
 
 -- --------------------------------------------------------
 
@@ -174,14 +197,15 @@ CREATE TABLE IF NOT EXISTS `tipo_usuario` (
   `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=5 ;
 
 --
 -- Volcado de datos para la tabla `tipo_usuario`
 --
 
 INSERT INTO `tipo_usuario` (`id`, `nombre`, `descripcion`, `created_at`, `updated_at`) VALUES
-(1, 'Programador', 'Encargado del sitema...', '2014-04-26 02:09:18', '2014-04-26 02:09:18');
+(2, 'Recepcionista', 'Encargado de la recepcion de clientes ....', '2014-04-30 20:21:30', '2014-04-30 20:22:19'),
+(3, 'Administrador', 'Encargado de administrar todo el sistema', '2014-04-30 20:23:25', '2014-04-30 20:23:25');
 
 -- --------------------------------------------------------
 
@@ -202,15 +226,15 @@ CREATE TABLE IF NOT EXISTS `trabajador` (
   `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=4 ;
 
 --
 -- Volcado de datos para la tabla `trabajador`
 --
 
 INSERT INTO `trabajador` (`id`, `nombre`, `apellidoP`, `apellidoM`, `telefono`, `direccion`, `email`, `ci`, `acitvo`, `created_at`, `updated_at`) VALUES
-(1, 'jorge', 'Quispe', 'Orihuela', '75619084', 'villa verde', 'luisi_17e@hotmail.com', '342343', '1', '2014-04-26 02:09:45', '2014-04-26 02:09:45'),
-(2, 'leidy', 'morato', 'rocha', '67804773', 'villa verde', 'aracely@hotmail.com', '12312312', '1', '2014-04-26 02:10:56', '2014-04-26 02:10:56');
+(1, 'jorge', 'Quispe', 'Orihuela', '75619084', 'villa verde', 'jorgeluiz.q@hotmail.com', '342343', '1', '2014-04-26 02:09:45', '2014-04-29 22:43:50'),
+(3, 'leidy', 'morato', 'rocha', '67804773', 'villa verde', 'aracely@hotmail.com', '221122', '1', '2014-04-29 22:51:51', '2014-04-29 22:51:51');
 
 -- --------------------------------------------------------
 
@@ -220,10 +244,11 @@ INSERT INTO `trabajador` (`id`, `nombre`, `apellidoP`, `apellidoM`, `telefono`, 
 
 CREATE TABLE IF NOT EXISTS `usuario` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `login` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `clave` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `password` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `fecha_creacion` date NOT NULL,
   `acitvo` varchar(1) COLLATE utf8_unicode_ci NOT NULL,
+  `remember_token` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `id_trabajador` int(10) unsigned NOT NULL,
   `id_tipo_usuario` int(10) unsigned NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
@@ -231,14 +256,14 @@ CREATE TABLE IF NOT EXISTS `usuario` (
   PRIMARY KEY (`id`),
   KEY `usuario_id_trabajador_foreign` (`id_trabajador`),
   KEY `usuario_id_tipo_usuario_foreign` (`id_tipo_usuario`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=4 ;
 
 --
 -- Volcado de datos para la tabla `usuario`
 --
 
-INSERT INTO `usuario` (`id`, `login`, `clave`, `fecha_creacion`, `acitvo`, `id_trabajador`, `id_tipo_usuario`, `created_at`, `updated_at`) VALUES
-(1, 'jluiz', '$2y$10$vnjmTdvNiijlRjECbBuR.OSD38Xve2MS8awmTGkZTGWyNLzPZjah6', '2014-04-25', '1', 2, 1, '2014-04-26 02:10:13', '2014-04-26 02:11:08');
+INSERT INTO `usuario` (`id`, `email`, `password`, `fecha_creacion`, `acitvo`, `remember_token`, `id_trabajador`, `id_tipo_usuario`, `created_at`, `updated_at`) VALUES
+(3, 'jorgeluiz.q@hotmail.com', '$2y$10$G//uy4/Q5vzXHQuHjRygAu3nZ9B4EF6YwKhlL4ftyExPn.aw9j7le', '2014-04-30', '1', '', 1, 3, '2014-04-30 22:43:51', '2014-04-30 22:43:51');
 
 --
 -- Restricciones para tablas volcadas

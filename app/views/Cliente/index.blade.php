@@ -1,6 +1,6 @@
-@extends('sistema')
+@extends('administracion')
 @section('title')
-TIPO USUARIO
+LISTADO DE CLIENTES
 @stop
 @section('content')
 <div class="table-responsive">
@@ -8,7 +8,7 @@ TIPO USUARIO
         <thead>
             <tr>
                 <th colspan="4">
-                    <a href="tipo-usuario/create" title="Nuevo">
+                    <a href="cliente/create" title="Nuevo">
                         <span class="label label-primary"><span class="glyphicon glyphicon-plus"></span> Nuevo</span>
                         <span class="label label-default"></span>            
                     </a>
@@ -16,19 +16,29 @@ TIPO USUARIO
             </tr>
             <tr>
                 <th>Nombre</th>
-                <th>Descripción</th>
+                <th>Ap. Paterno</th>
+                <th>Ap. Materno</th>
+                <th>CI</th> 
+                <th>Teléfono</th>
+                <th>Dirección</th>
+                <th>Email</th>
                 <th colspan="2"></th>            
             </tr>
         </thead>
         <tbody>
-            @foreach($TipoUsuario as $row)
+            @foreach($Cliente as $row)
             <tr>
                 <td>{{ $row->nombre }}</td>
-                <td>{{ $row->descripcion }}</td>    
-                <td><a href="tipo-usuario/{{$row->id}}/edit" title="Editar"><span class="glyphicon glyphicon-pencil"></span></a></td>
+                <td>{{ $row->apellidoP }}</td>
+                <td>{{ $row->apellidoM }}</td>
+                <td>{{ $row->ci }}</td>
+                <td>{{ $row->telefono }}</td>
+                <td>{{ $row->direccion }}</td>
+                <td>{{ $row->email }}</td>
+                <td><a href="cliente/{{$row->id}}/edit" title="Editar"><span class="glyphicon glyphicon-pencil"></span></a></td>
                 <td>
                     <a href="#" class="a-delete" title="Eliminar"><span class="glyphicon glyphicon-trash"></span></a>
-                    {{ Form::open(array('url'=>'sistema/tipo-usuario/'.$row->id,'method'=>'delete'))}}                         
+                    {{ Form::open(array('url'=>'administracion/cliente/'.$row->id,'method'=>'delete'))}}                    
                     {{ Form::close()}}
                 </td>
             </tr>  

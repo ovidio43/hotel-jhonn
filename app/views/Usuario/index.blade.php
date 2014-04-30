@@ -33,7 +33,7 @@ LISTADO DE USUARIOS
                 <td><a href="usuario/{{$row->id}}/edit" title="Editar"><span class="glyphicon glyphicon-pencil"></span></a></td>
                 <td>
                     <a href="#" class="a-delete" title="Eliminar"><span class="glyphicon glyphicon-trash"></span></a>
-                    {{ Form::open(array('url'=>'administracion/usuario/'.$row->id,'method'=>'delete'))}}                    
+                    {{ Form::open(array('url'=>'sistema/usuario/'.$row->id,'method'=>'delete'))}}                    
                     {{ Form::close()}}
                 </td>
             </tr>  

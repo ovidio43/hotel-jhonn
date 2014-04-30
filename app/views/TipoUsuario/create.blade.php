@@ -4,7 +4,7 @@ NUEVO TIPO USUARIO
 @stop
 @section('content')
 
-{{ Form::open(array('url' => 'tipo-usuario','class'=>'form-horizontal')) }}   
+{{ Form::open(array('url' => 'sistema/tipo-usuario','class'=>'form-horizontal')) }}   
 <div class="form-group">
     {{Form::label('nombre', 'Nombre',['class'=>'col-sm-3 control-label'])}}
     <div class="col-sm-4">

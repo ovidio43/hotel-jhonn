@@ -44,7 +44,7 @@ class UsuarioController extends \BaseController {
         $validation = Validator::make($input, $this->rules, $this->message);
         if (!$validation->fails()) {
             $ObjUsuario->save();
-            return Redirect::to('administracion/usuario')->with('Usuario', Input::all());
+            return Redirect::to('sistema/usuario')->with('Usuario', Input::all());
         } else {
             return Redirect::back()->withErrors($validation);
         }
@@ -79,7 +79,7 @@ class UsuarioController extends \BaseController {
 
         if (!$validation->fails()) {
             $ObjUsuario->save();
-            return Redirect::to('administracion/usuario')->with('Usuario', $input);
+            return Redirect::to('sistema/usuario')->with('Usuario', $input);
         } else {
             return Redirect::back()->withErrors($validation);
         }
@@ -88,7 +88,7 @@ class UsuarioController extends \BaseController {
     public function destroy($id) {
         $ObjUsuario = Usuario::find($id);
         $ObjUsuario->delete();
-        return Redirect::to('administracion/usuario');
+        return Redirect::to('sistema/usuario');
     }
 
 }

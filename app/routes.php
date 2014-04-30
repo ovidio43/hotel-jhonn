@@ -19,6 +19,7 @@ Route::resource('sistema/usuario', 'UsuarioController');
 Route::resource('sistema/tipo-usuario', 'TipoUsuarioController');
 
 Route::resource('administracion/trabajador', 'TrabajadorController');
+Route::resource('administracion/cliente', 'ClienteController');
 Route::resource('administracion/habitacion', 'HabitacionController');
 Route::resource('administracion/tipo-habitacion', 'TipoHabitacionController');
 

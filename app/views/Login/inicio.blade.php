@@ -1,10 +1,12 @@
 @include('header')
-<h1>Bienvenido : 
+<h1> 
     <?php
+    echo Route::currentRouteName();
+    echo '<br>';
     if (Auth::user()) {
         $objUsuario = Usuario::find(Auth::user()->id);
         if ($objUsuario) {
-            echo $objUsuario->trabajador->nombre . ' ' . $objUsuario->trabajador->apellidoP;
+            echo $objUsuario->tipoUsuario->nombre . ' : ' . $objUsuario->trabajador->nombre . ' ' . $objUsuario->trabajador->apellidoP;
         }
     }
     ?>

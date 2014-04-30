@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
     <head>
@@ -13,7 +12,6 @@
         {{ HTML::script('js/main.min.js') }}        
     </head>
     <body>
-
         <div role="navigation" class="navbar navbar-inverse navbar-fixed-top">
             <div class="container-fluid">
                 <div class="navbar-header">
@@ -28,28 +26,39 @@
                         <span class="glyphicon-class">HOTEL</span>
                     </a>
                 </div>
+
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav navbar-left">
-                        <li ><a href="{{URL::to('sistema')}}">Sistema</a></li>  
-                        <li ><a href="{{URL::to('administracion')}}">Administración</a></li>  
-                        <li ><a href="{{URL::to('reservasiones')}}">Reservasiones</a></li>                          
+                        <li <?php echo (Request::is('sistema/*') || Request::is('sistema')) ? 'class="active"' : ''; ?>>
+                            <a href="{{URL::to('sistema')}}"><span class="glyphicon glyphicon-cog"></span> Sistema</a>
+                        </li>  
+                        <li  <?php echo (Request::is('administracion/*') || Request::is('administracion')) == true ? 'class="active"' : ''; ?>>
+                            <a href="{{URL::to('administracion')}}"><span class="glyphicon glyphicon-hdd"></span> Administración</a>
+                        </li>  
+                        <li  <?php echo (Request::is('reservasiones/*') || Request::is('reservasiones')) == true ? 'class="active"' : ''; ?>>
+                            <a href="{{URL::to('reservasiones')}}"><span class="glyphicon glyphicon-asterisk "></span> Reservasiones</a>
+                        </li>                          
                     </ul>                                        
                     {{ Form::open(array('url'=>'login/0','method'=>'delete','class'=>'navbar-form navbar-right'))}}
 
                     <a href="#" id="link-closeSession" title="Cerrar Sesion">
-                        <span class="glyphicon glyphicon-user"></span> jorge luiz 
+                        <span class="glyphicon glyphicon-user"></span> 
+                        <?php
+                        echo Auth::user()->trabajador->nombre . ' ' . Auth::user()->trabajador->apellidoP . ' ' . Auth::user()->trabajador->apellidoM;
+                        ?>
                         <span class="glyphicon glyphicon-log-out"></span>
                     </a>                   
                     {{ Form::close()}}
                 </div>
             </div>
         </div>
+
         <div class="container-fluid">
             <div class="row">
                 <h1>
                     <?php
                     Route::currentRouteAction();
-                    echo Route::currentRouteName();
+//                    echo Route::currentRouteName();
                     ?>
                 </h1>
 

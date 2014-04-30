@@ -3,7 +3,7 @@
 NUEVO USUARIO
 @stop
 @section('content')
-{{ Form::open(array('url' => 'administracion/usuario','class'=>'form-horizontal')) }}
+{{ Form::open(array('url' => 'sistema/usuario','class'=>'form-horizontal')) }}
 <div class="form-group">
     {{Form::label('email', 'Email',['class'=>'col-sm-3 control-label'])}}
     <div class="col-sm-4">
