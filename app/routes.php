@@ -1,5 +1,4 @@
 <?php
-
 /*
   |--------------------------------------------------------------------------
   | Application Routes
@@ -26,12 +25,16 @@ Route::get('sistema/parametros', function() {
     }
 });
 
-Route::resource('sistema/parametros/moneda', 'MonedaController');
+
 
 Route::resource('administracion/trabajador', 'TrabajadorController');
 Route::resource('administracion/cliente', 'ClienteController');
 Route::resource('administracion/habitacion', 'HabitacionController');
 Route::resource('administracion/tipo-habitacion', 'TipoHabitacionController');
+/* * ****************pticiones ajax************************ */
+Route::resource('sistema/parametros/moneda', 'MonedaController');
+Route::get('administracion/moneda/{numPrices}', 'MonedaController@getList');
+/* * **************************************************************** */
 
 Route::resource('/', 'LoginController');
 Route::resource('login', 'LoginController');

@@ -33,7 +33,7 @@ class MonedaController extends \BaseController {
         $input = Input::all();
         $ObjMoneda->nombre = $input['nombre'];
         $ObjMoneda->pais = $input['pais'];
-        $ObjMoneda->simbolo = $input['simbolo'];        
+        $ObjMoneda->simbolo = $input['simbolo'];
         $validation = Validator::make($input, $this->rules, $this->message);
         if (!$validation->fails()) {
             $ObjMoneda->save();
@@ -54,23 +54,28 @@ class MonedaController extends \BaseController {
         $ObjMoneda = Moneda::find($id);
         $ObjMoneda->nombre = $input['nombre'];
         $ObjMoneda->pais = $input['pais'];
-        $ObjMoneda->simbolo = $input['simbolo']; 
+        $ObjMoneda->simbolo = $input['simbolo'];
         $validation = Validator::make($input, $this->rules, $this->message);
         if (!$validation->fails()) {
             $ObjMoneda->save();
             return Redirect::to('sistema/parametros/moneda')->with('Moneda', $input);
-        } else {    
+        } else {
             return View::make('Parametros.Moneda.edit')->with('Moneda', $ObjMoneda)->withErrors($validation);
 //            return Redirect::back()->withErrors($validation);
         }
     }
 
     public function destroy($id) {
-        if ($id != 5) {
-            $ObjMoneda = Moneda::find($id);
-            $ObjMoneda->delete();
-        }
+        $ObjMoneda = Moneda::find($id);
+        $ObjMoneda->delete();
+
         return Redirect::to('sistema/parametros/moneda');
     }
+    
+    public function getList($numPrices) {
+        $ObjMoneda = Moneda::orderBy('nombre', 'asc')->get();
+        return View::make('Parametros.Moneda.prices')->with('Moneda', $ObjMoneda)->with('numPrices',$numPrices);
+    }
+
 
 }

@@ -7,5 +7,8 @@ class TipoHabitacion extends Eloquent {
     public function habitacion() {
         return $this->hasMany('Habitacion');
     }
+    public function precio() {
+        return $this->hasMany('Precio');
+    }
 
 }
