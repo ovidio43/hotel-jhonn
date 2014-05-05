@@ -1,6 +1,6 @@
 @extends('administracion')
 @section('title')
-LISTADO DE TRABAJADOR
+TRABAJADORES
 @stop
 @section('content')
 <div class="table-responsive">

@@ -15,7 +15,7 @@ class CrearHabitacion extends Migration {
             $table->increments('id');
             $table->integer('nro');
             $table->string('estado', 20);
-            $table->string('acitvo', 1);
+            $table->string('activo', 1);
             $table->integer('id_tipo_habitacion')->unsigned();
             $table->foreign('id_tipo_habitacion')->references('id')->on('tipo_habitacion')->onDelete('cascade');
             $table->timestamps();

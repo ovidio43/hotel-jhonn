@@ -27,7 +27,7 @@ class CrearReservaHabitacion extends Migration {
      * @return void
      */
     public function down() {
-        Schema::drop('detalle_reserva_habitacion');
+        Schema::drop('reserva_habitacion');
     }
 
 }

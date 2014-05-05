@@ -18,7 +18,7 @@ class CrearReserva extends Migration {
             $table->date('fecha_reserva');
             $table->string('descripcion', 500);
             $table->string('estado', 20);
-            $table->string('acitvo', 1);
+            $table->string('activo', 1);
             $table->integer('id_trabajador')->unsigned();
             $table->foreign('id_trabajador')->references('id')->on('trabajador')->onDelete('cascade');
             $table->integer('id_cliente')->unsigned();

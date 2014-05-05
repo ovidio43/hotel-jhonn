@@ -20,7 +20,7 @@ class CrearTrabajador extends Migration {
             $table->string('direccion', 255);
             $table->string('email', 255);
             $table->string('ci', 255);
-            $table->string('acitvo', 1);
+            $table->string('activo', 1);
             $table->timestamps();
         });
     }

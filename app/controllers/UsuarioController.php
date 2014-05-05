@@ -23,7 +23,7 @@ class UsuarioController extends \BaseController {
     }
 
     public function index() {
-        $ObjUsuario = Usuario::all();
+        $ObjUsuario = Usuario::where('id_tipo_usuario','!=','1');
         return View::make('Usuario.index')->with('Usuario', $ObjUsuario);
     }
 
@@ -36,11 +36,10 @@ class UsuarioController extends \BaseController {
         $input = Input::all();
         $ObjUsuario->email = $input['email'];
         $ObjUsuario->password = Hash::make($input['password']);
-//        $ObjUsuario->password =$input['password'];
         $ObjUsuario->fecha_creacion = date('Y-m-d');
         $ObjUsuario->id_trabajador = $input['id_trabajador'];
         $ObjUsuario->id_tipo_usuario = $input['id_tipo_usuario'];
-        $ObjUsuario->acitvo = 1;
+        $ObjUsuario->activo = 1;
         $validation = Validator::make($input, $this->rules, $this->message);
         if (!$validation->fails()) {
             $ObjUsuario->save();
@@ -65,7 +64,6 @@ class UsuarioController extends \BaseController {
         $ObjUsuario = Usuario::find($id);
         if (Input::has('password')) {
             $ObjUsuario->password = Hash::make($input['password']);
-//            $ObjUsuario->password = $input['password'];
         }
         $ObjUsuario->id_trabajador = $input['id_trabajador'];
         $ObjUsuario->id_tipo_usuario = $input['id_tipo_usuario'];

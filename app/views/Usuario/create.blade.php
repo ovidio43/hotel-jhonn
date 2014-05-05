@@ -23,8 +23,8 @@ NUEVO USUARIO
     <div class="col-sm-4">
         <select name="id_trabajador" class="form-control" >   
             <option value="">ELEGIR</option>
-            @foreach(Trabajador::where('acitvo','=','1')->orderBy('nombre','asc')->get() as $row)             
-            <option value="{{$row->id}}">{{$row->nombre.' '.$row->apellidoP.' '.$row->apellidoM.' '.$row->activo}}</option>         
+            @foreach(Trabajador::where('activo','=','1')->orderBy('nombre','asc')->get() as $row)             
+            <option value="{{$row->id}}">{{$row->nombre.' '.$row->apellidoP.' '.$row->apellidoM}}</option>         
             @endforeach
         </select>
         <span class="error">{{ $errors->first('id_trabajador')}}</span>
@@ -35,7 +35,7 @@ NUEVO USUARIO
     <div class="col-sm-4">
         <select name="id_tipo_usuario" class="form-control" > 
             <option value="">ELEGIR</option>
-            @foreach(TipoUsuario::orderBy('nombre','asc')->get() as $row)             
+            @foreach(TipoUsuario::where('id','!=','1')->orderBy('nombre','asc')->get() as $row)             
              <option value="{{$row->id}}">{{$row->nombre}}</option>         
             @endforeach
         </select>               

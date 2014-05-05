@@ -9,7 +9,7 @@ class TipoUsuarioController extends \BaseController {
         'required' => 'Campo Obligatorio',
     );
 
-   public function __construct() {
+    public function __construct() {
         $this->beforeFilter(function() {
             if (!Auth::check()) {
                 return Redirect::to('/');
@@ -18,7 +18,7 @@ class TipoUsuarioController extends \BaseController {
     }
 
     public function index() {
-        $ObjTipoUsuario = TipoUsuario::all();
+        $ObjTipoUsuario = TipoUsuario::where('id','!=','1');
         return View::make('TipoUsuario.index')->with('TipoUsuario', $ObjTipoUsuario);
     }
 
@@ -65,8 +65,10 @@ class TipoUsuarioController extends \BaseController {
     }
 
     public function destroy($id) {
-        $ObjTipoUsuario = TipoUsuario::find($id);
-        $ObjTipoUsuario->delete();
+        if ($id != 5) {
+            $ObjTipoUsuario = TipoUsuario::find($id);
+            $ObjTipoUsuario->delete();
+        }
         return Redirect::to('sistema/tipo-usuario');
     }
 

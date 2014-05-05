@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CrearTipoHabitacion extends Migration {
+class CrearMoneda extends Migration {
 
     /**
      * Run the migrations.
@@ -11,10 +11,11 @@ class CrearTipoHabitacion extends Migration {
      * @return void
      */
     public function up() {
-        Schema::create('tipo_habitacion', function(Blueprint $table) {
+        Schema::create('moneda', function(Blueprint $table) {
             $table->increments('id');
-            $table->string('nombre', 255);
-            $table->string('descripcion', 500);            
+            $table->string('nombre', 50);
+            $table->string('pais', 100);            
+            $table->string('simbolo', 20);            
             $table->timestamps();
         });
     }
@@ -25,7 +26,7 @@ class CrearTipoHabitacion extends Migration {
      * @return void
      */
     public function down() {
-        Schema::drop('tipo_habitacion');
+        Schema::drop('moneda');
     }
 
 }

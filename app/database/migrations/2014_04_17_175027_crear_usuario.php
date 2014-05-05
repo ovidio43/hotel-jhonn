@@ -13,10 +13,11 @@ class CrearUsuario extends Migration {
     public function up() {
         Schema::create('usuario', function(Blueprint $table) {
             $table->increments('id');
-            $table->string('login', 255);
-            $table->string('clave', 255);
+            $table->string('email', 255)->unique();
+            $table->string('password', 255);
             $table->date('fecha_creacion');
-            $table->string('acitvo', 1);
+            $table->string('remember_token', 100);
+            $table->string('activo', 1);
             $table->integer('id_trabajador')->unsigned();
             $table->foreign('id_trabajador')->references('id')->on('trabajador')->onDelete('cascade');
             $table->integer('id_tipo_usuario')->unsigned();

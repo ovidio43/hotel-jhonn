@@ -25,7 +25,7 @@ class TrabajadorController extends \BaseController {
     }
 
     public function index() {
-        $ObjTrabajador = Trabajador::all();
+        $ObjTrabajador = Trabajador::where('id','!=','1')->orderBy('nombre','asc');
         return View::make('Trabajador.index')->with('Trabajador', $ObjTrabajador);
     }
 
@@ -43,7 +43,7 @@ class TrabajadorController extends \BaseController {
         $ObjTrabajador->direccion = $input['direccion'];
         $ObjTrabajador->ci = $input['ci'];
         $ObjTrabajador->email = $input['email'];
-        $ObjTrabajador->acitvo = 1;
+        $ObjTrabajador->activo = 1;
         $validation = Validator::make($input, $this->rules, $this->message);
         if (!$validation->fails()) {
             $ObjTrabajador->save();
@@ -73,7 +73,7 @@ class TrabajadorController extends \BaseController {
         $ObjTrabajador->direccion = $input['direccion'];
         $ObjTrabajador->ci = $input['ci'];
         $ObjTrabajador->email = $input['email'];
-        $ObjTrabajador->acitvo = 1;
+        $ObjTrabajador->activo = 1;
         $validation = Validator::make($input, $this->rules, $this->message);
         if (!$validation->fails()) {
             $ObjTrabajador->save();

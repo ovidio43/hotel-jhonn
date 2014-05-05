@@ -3,7 +3,6 @@
 LISTADO DE USUARIOS
 @stop
 @section('content')
-
 <div class="table-responsive">
     <table class="table table-striped">
         <thead>

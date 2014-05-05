@@ -12,6 +12,9 @@
         {{ HTML::script('js/main.min.js') }}        
     </head>
     <body>
+        <div class="alert alert-info custom-loading">
+            <strong>Cargando...</strong> 
+        </div>
         <div role="navigation" class="navbar navbar-inverse navbar-fixed-top">
             <div class="container-fluid">
                 <div class="navbar-header">
@@ -55,10 +58,4 @@
 
         <div class="container-fluid">
             <div class="row">
-                <h1>
-                    <?php
-                    Route::currentRouteAction();
-//                    echo Route::currentRouteName();
-                    ?>
-                </h1>
 

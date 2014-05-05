@@ -7,8 +7,8 @@
         <li <?php echo (Request::is('sistema/tipo-usuario/*') || Request::is('sistema/tipo-usuario')) ? 'class="active"' : ''; ?>>
             <a href="{{URL::to('sistema/tipo-usuario')}}"><span class="glyphicon glyphicon-user"></span> Tipo Usuario</a>
         </li>
-        <li>
-            <a href="#"><span class="glyphicon glyphicon-wrench"></span> Parametros</a>
+        <li <?php echo (Request::is('sistema/parametros/*') || Request::is('sistema/parametros')) ? 'class="active"' : ''; ?>>
+            <a href="{{URL::to('sistema/parametros')}}"><span class="glyphicon glyphicon-wrench"></span> Parametros</a>
         </li>        
     </ul>
 </div>

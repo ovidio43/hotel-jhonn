@@ -18,6 +18,16 @@
 Route::resource('sistema/usuario', 'UsuarioController');
 Route::resource('sistema/tipo-usuario', 'TipoUsuarioController');
 
+Route::get('sistema/parametros', function() {
+    if (Auth::check()) {
+        return View::make('Parametros.parametros');
+    } else {
+        return Redirect::to('/');
+    }
+});
+
+Route::resource('sistema/parametros/moneda', 'MonedaController');
+
 Route::resource('administracion/trabajador', 'TrabajadorController');
 Route::resource('administracion/cliente', 'ClienteController');
 Route::resource('administracion/habitacion', 'HabitacionController');
