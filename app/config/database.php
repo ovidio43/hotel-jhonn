@@ -55,13 +55,24 @@ return array(
 		'mysql' => array(
 			'driver'    => 'mysql',
 			'host'      => 'localhost',
-			'database'  => 'dbhotel',
-			'username'  => 'root',
-			'password'  => '',
+			'database'  => 'jhonny_dbhotel',
+			'username'  => 'jhonny_jhonny',
+			'password'  => 'EyiU?AXBIJI_',
 			'charset'   => 'utf8',
 			'collation' => 'utf8_unicode_ci',
 			'prefix'    => '',
 		),
+//
+//		'mysql' => array(
+//			'driver'    => 'mysql',
+//			'host'      => 'localhost',
+//			'database'  => 'dbhotel',
+//			'username'  => 'root',
+//			'password'  => '',
+//			'charset'   => 'utf8',
+//			'collation' => 'utf8_unicode_ci',
+//			'prefix'    => '',
+//		),
 		'pgsql' => array(
 			'driver'   => 'pgsql',
 			'host'     => 'localhost',
