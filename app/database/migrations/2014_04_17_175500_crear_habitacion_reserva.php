@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CrearReservaHabitacion extends Migration {
+class CrearHabitacionReserva extends Migration {
 
     /**
      * Run the migrations.
@@ -11,7 +11,7 @@ class CrearReservaHabitacion extends Migration {
      * @return void
      */
     public function up() {
-        Schema::create('reserva_habitacion', function(Blueprint $table) {
+        Schema::create('habitacion_reserva', function(Blueprint $table) {
             $table->increments('id');
             $table->integer('id_reserva')->unsigned();
             $table->foreign('id_reserva')->references('id')->on('reserva')->onDelete('cascade');

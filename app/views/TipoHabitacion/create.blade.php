@@ -13,7 +13,7 @@ NUEVO TIPO HABITACION
 </div>
 
 <div class="form-group" >
-    {{Form::label('descripcion', 'Descripcion',['class'=>'col-sm-3 control-label'])}}
+    {{Form::label('descripcion', 'Descripción',['class'=>'col-sm-3 control-label'])}}
     <div class="col-sm-4">
         {{ Form::textArea('descripcion','',['class'=>'form-control'])}}
         <span class="error">{{ $errors->first('descripcion')}}</span>
@@ -21,7 +21,8 @@ NUEVO TIPO HABITACION
 </div>
 <!--  link para adicionar precios -->
 <div class="form-group">
-    <div class="col-sm-4">        
+    <div class="col-sm-4">   
+        <input type="hidden" value="0" name="prices" id="prices">
         <a href="{{URL::to('administracion')}}/moneda" id="add-price" rel="0">
             <span class="glyphicon glyphicon-plus"></span> Adicionar precio
         </a>

@@ -13,7 +13,7 @@ class CrearPago extends Migration {
     public function up() {
         Schema::create('pago', function(Blueprint $table) {
             $table->increments('id');
-            $table->date('fecha');
+            $table->dateTime('fecha');
             $table->float('monto');
             $table->string('concepto', 500);
             $table->string('activo', 1);

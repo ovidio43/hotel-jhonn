@@ -1,5 +1,4 @@
-<div class="form-group">
-    
+<div class="form-group">    
     <a href="#" class="remove-price"><span class="glyphicon glyphicon-remove"></span></a>
     {{Form::label('monto'.$numPrices, 'Precio',['class'=>'col-sm-2 control-label'])}}
     <div class="col-sm-2">
@@ -8,8 +7,7 @@
     </div>
     {{Form::label('id_moneda'.$numPrices, 'Moneda',['class'=>'col-sm-2 control-label'])}}
     <div class="col-sm-2">
-        <select name="id_moneda{{$numPrices}}" id="id_moneda{{$numPrices}}" class="form-control" > 
-            <option value="">...........</option>
+        <select name="id_moneda{{$numPrices}}" id="id_moneda{{$numPrices}}" class="form-control" >             
             @foreach($Moneda as $row)             
             <option value="{{$row->id}}">{{$row->simbolo}}</option>         
             @endforeach

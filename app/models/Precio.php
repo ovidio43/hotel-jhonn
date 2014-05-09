@@ -1,11 +1,14 @@
 <?php
 
-class Moneda extends Eloquent {
+class Precio extends Eloquent {
 
     protected $table = 'precio';
 
     public function tipoHabitacion() {
-        return $this->belongsTo('TipoHabitacion', 'id_tipo_habitacion');
+        return $this->belongsTo('TipoHabitacion', 'id');
+    }
+    public function moneda() {
+         return $this->belongsTo('moneda','id');
     }
 
 }

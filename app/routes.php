@@ -1,4 +1,5 @@
 <?php
+
 /*
   |--------------------------------------------------------------------------
   | Application Routes
@@ -31,9 +32,14 @@ Route::resource('administracion/trabajador', 'TrabajadorController');
 Route::resource('administracion/cliente', 'ClienteController');
 Route::resource('administracion/habitacion', 'HabitacionController');
 Route::resource('administracion/tipo-habitacion', 'TipoHabitacionController');
+
+Route::resource('reservaciones', 'ReservaController');
+
+
 /* * ****************pticiones ajax************************ */
 Route::resource('sistema/parametros/moneda', 'MonedaController');
 Route::get('administracion/moneda/{numPrices}', 'MonedaController@getList');
+Route::get('administracion/tipo-habitacion/delete/price/{idprecio}', 'PrecioController@deletePrecio');
 /* * **************************************************************** */
 
 Route::resource('/', 'LoginController');
@@ -53,11 +59,11 @@ Route::get('sistema', function() {
         return Redirect::to('/');
     }
 });
-Route::get('reservasiones', function() {
-    if (Auth::check()) {
-        return View::make('reservasiones');
-    } else {
-        return Redirect::to('/');
-    }
-});
+//Route::get('reservaciones', function() {
+//    if (Auth::check()) {
+//        return View::make('reservaciones');
+//    } else {
+//        return Redirect::to('/');
+//    }
+//});
 

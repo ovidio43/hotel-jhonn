@@ -7,9 +7,11 @@
         {{ HTML::style('css/bootstrap-3.1.1/css/bootstrap.min.css') }}
         {{ HTML::style('css/bootstrap-3.1.1/css/bootstrap-theme.min.css') }}                
         {{ HTML::style('css/layout.css') }}                
+        {{ HTML::style('js/Zebra_Datepicker-master/css/bootstrap.css') }}                
         {{ HTML::script('js/jquery-2.0.2.min.js') }}
         {{ HTML::script('css/bootstrap-3.1.1/js/bootstrap.min.js') }}
-        {{ HTML::script('js/main.min.js') }}        
+        {{ HTML::script('js/Zebra_Datepicker-master/javascript/zebra_datepicker.js') }}        
+        {{ HTML::script('js/main.min.js') }} 
     </head>
     <body>
         <div class="alert alert-info custom-loading">
@@ -38,8 +40,8 @@
                         <li  <?php echo (Request::is('administracion/*') || Request::is('administracion')) == true ? 'class="active"' : ''; ?>>
                             <a href="{{URL::to('administracion')}}"><span class="glyphicon glyphicon-hdd"></span> Administración</a>
                         </li>  
-                        <li  <?php echo (Request::is('reservasiones/*') || Request::is('reservasiones')) == true ? 'class="active"' : ''; ?>>
-                            <a href="{{URL::to('reservasiones')}}"><span class="glyphicon glyphicon-asterisk "></span> Reservasiones</a>
+                        <li  <?php echo (Request::is('reservaciones/*') || Request::is('reservaciones')) == true ? 'class="active"' : ''; ?>>
+                            <a href="{{URL::to('reservaciones')}}"><span class="glyphicon glyphicon-asterisk "></span> Reservaciones</a>
                         </li>                          
                     </ul>                                        
                     {{ Form::open(array('url'=>'login/0','method'=>'delete','class'=>'navbar-form navbar-right'))}}

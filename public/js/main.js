@@ -1,4 +1,16 @@
 $(document).ready(function() {
+    $('#date-start').Zebra_DatePicker({
+        direction: true,
+        pair: $('#date-end'),
+        always_visible: $('#caledar-visible1')
+    });
+
+    $('#date-end').Zebra_DatePicker({
+        direction: 1,
+        always_visible: $('#caledar-visible2')
+    });
+
+
     $('.a-delete').on('click', function() {
         var status = confirm("Se Eliminará el Item Seleccionado!!!");
         if (status == false) {
@@ -31,9 +43,26 @@ $(document).ready(function() {
         e.preventDefault();
         var url = $(this).attr('action');
         var data = $(this).serialize();
-        console.log(url);
-        console.log(data);
         sendRequest(url, 'POST', data);
+    });
+    $('body').on('click', '.a-delete-ajax', function(e) {
+        e.preventDefault();
+        var currentObj = $(this);
+        var currentform = currentObj.next('form');
+        var url = currentform.attr('action');
+        var data = currentform.serialize();
+
+        currentObj.submit(function(f) {
+            f.preventDefault();
+            alert('jasdofjasñodfhlkzsdjh');
+        });
+
+//        $.post(url, data, function(data) {
+//            if (data == 'ok') {
+//                currentObj.parent().parent().remove();
+//            }
+//        });
+
     });
 
     /******accion adicionar inputs para aignar precio a tipo de habitacion en modulo administracion*******/
@@ -42,13 +71,13 @@ $(document).ready(function() {
         var thisObj = $(this);
         thisObj.hide();
         thisObj.next().show();
-        var cantPrice = thisObj.attr('rel');
+        var cantPrice = $('input#prices').val();
         var url = thisObj.attr('href');
         cantPrice++;
         $.get(url + '/' + cantPrice, function(data) {
             thisObj.parent().parent().siblings('#content-button').before(data);
         }).complete(function() {
-            thisObj.attr('rel', cantPrice);
+            $('input#prices').val(cantPrice);
             thisObj.next().hide();
             thisObj.show();
         });
@@ -56,9 +85,25 @@ $(document).ready(function() {
     $('body').on('click', '.remove-price', function(e) {
         e.preventDefault();
         $(this).parent().remove();
-        var cantPrice = $('#add-price').attr('rel');
+        var cantPrice = $('input#prices').val();
         cantPrice--;
-        $('#add-price').attr('rel', cantPrice);
+        $('input#prices').val(cantPrice);
+    });
+    $('body').on('click', '.delete-price', function(e) {
+        e.preventDefault();
+        var thisObj = $(this);
+        var url = thisObj.attr('href');
+        var cantPrice = $('input#prices').val();
+        var status = confirm("Se Eliminará el precio seleccionado!!!");
+        if (status) {
+            $.get(url, function(data) {
+                if (data == 'ok') {
+                    thisObj.parent().remove();
+                    cantPrice--;
+                    $('input#prices').val(cantPrice);
+                }
+            });
+        }
     });
     /***************************************/
 

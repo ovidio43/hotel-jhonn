@@ -23,7 +23,7 @@ NUEVO USUARIO
     <div class="col-sm-4">
         <select name="id_trabajador" class="form-control" >   
             <option value="">ELEGIR</option>
-            @foreach(Trabajador::where('activo','=','1')->orderBy('nombre','asc')->get() as $row)             
+            @foreach(Trabajador::where('id','!=','1')->orderBy('nombre','asc')->get() as $row)             
             <option value="{{$row->id}}">{{$row->nombre.' '.$row->apellidoP.' '.$row->apellidoM}}</option>         
             @endforeach
         </select>

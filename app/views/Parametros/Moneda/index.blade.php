@@ -28,7 +28,7 @@
                 <td>{{ $row->simbolo}}</td>    
                 <td><a href="parametros/moneda/{{$row->id}}/edit" title="Editar" class="new-item"><span class="glyphicon glyphicon-pencil"></span></a></td>
                 <td>
-                    <a href="#" class="a-delete" title="Eliminar"><span class="glyphicon glyphicon-trash"></span></a>
+                    <a href="#" class="a-delete-ajax" title="Eliminar"><span class="glyphicon glyphicon-trash"></span></a>
                     {{ Form::open(array('url'=>'sistema/parametros/moneda/'.$row->id,'method'=>'delete'))}}                         
                     {{ Form::close()}}
                 </td>

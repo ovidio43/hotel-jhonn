@@ -3,7 +3,7 @@
 class ClienteController extends \BaseController {
 
     private $rules = array(
-        'nombre' => 'Required|',
+        'nombre' => 'Required',
         'apellidoP' => 'Required',
         'apellidoM' => 'Required',
         'ci' => 'Required',

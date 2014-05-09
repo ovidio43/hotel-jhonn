@@ -4,11 +4,9 @@ class TipoHabitacionController extends \BaseController {
 
     private $rules = array(
         'nombre' => 'required',
-        'descripcion' => 'required',   
-        'monto' => 'required|numeric'
+        'descripcion' => 'required'
     );
     private $message = array(
-        'numeric' => 'Solo Números',
         'required' => 'Campo Obligatorio.'
     );
 
@@ -34,16 +32,23 @@ class TipoHabitacionController extends \BaseController {
         $input = Input::all();
         $ObjTipoHabitacion->nombre = $input['nombre'];
         $ObjTipoHabitacion->descripcion = $input['descripcion'];
-        $ObjTipoHabitacion->monto = $input['monto'];
-        $ObjTipoHabitacion->acitvo = 1;
         $validation = Validator::make($input, $this->rules, $this->message);
+
         if (!$validation->fails()) {
             $ObjTipoHabitacion->save();
+            for ($i = 1; $i <= $input['prices']; $i++) {
+                $objPrecio = new Precio;
+                $objPrecio->monto = $input['monto' . $i];
+                $objPrecio->id_moneda = $input['id_moneda' . $i];
+                $objPrecio->id_tipo_habitacion = $ObjTipoHabitacion->id;
+                $objPrecio->save();
+            }
             return Redirect::to('administracion/tipo-habitacion')->with('TipoHabitacion', Input::all());
         } else {
             return Redirect::back()->withErrors($validation);
         }
     }
+
     public function edit($id) {
         $ObjTipoHabitacion = TipoHabitacion::find($id);
         return View::make('TipoHabitacion.edit')->with('TipoHabitacion', $ObjTipoHabitacion);
@@ -54,10 +59,20 @@ class TipoHabitacionController extends \BaseController {
         $ObjTipoHabitacion = TipoHabitacion::find($id);
         $ObjTipoHabitacion->nombre = $input['nombre'];
         $ObjTipoHabitacion->descripcion = $input['descripcion'];
-        $ObjTipoHabitacion->monto = $input['monto'];
         $validation = Validator::make($input, $this->rules, $this->message);
         if (!$validation->fails()) {
             $ObjTipoHabitacion->save();
+            for ($i = 1; $i <= $input['prices']; $i++) {
+                if (isset($input['id_precio' . $i])) {
+                    $objPrecio = Precio::find($input['id_precio' . $i]);
+                } else {
+                    $objPrecio = new Precio;
+                }
+                $objPrecio->monto = $input['monto' . $i];
+                $objPrecio->id_moneda = $input['id_moneda' . $i];
+                $objPrecio->id_tipo_habitacion = $ObjTipoHabitacion->id;
+                $objPrecio->save();
+            }
             return Redirect::to('administracion/tipo-habitacion')->with('TipoHabitacion', $input);
         } else {
             return Redirect::back()->withErrors($validation);

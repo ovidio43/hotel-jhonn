@@ -17,7 +17,7 @@ TIPO HABITACION
             <tr>
                 <th>Nombre</th>
                 <th>Descripción</th>
-                <th>Costo</th>
+                <th>Precios</th>
                 <th colspan="2"></th>            
             </tr>
         </thead>
@@ -26,7 +26,7 @@ TIPO HABITACION
             <tr>
                 <td>{{ $row->nombre }}</td>
                 <td>{{ $row->descripcion }}</td>    
-                <td>{{ $row->monto}}</td>    
+                <td>precios</td>    
                 <td><a href="tipo-habitacion/{{$row->id}}/edit" title="Editar"><span class="glyphicon glyphicon-pencil"></span></a></td>
                 <td>
                     <a href="#" class="a-delete" title="Eliminar"><span class="glyphicon glyphicon-trash"></span></a>
