@@ -35,7 +35,7 @@ class HabitacionController extends \BaseController {
         $ObjHabitacion->nro = $input['nro'];
         $ObjHabitacion->estado = 'LIBRE';
         $ObjHabitacion->id_tipo_habitacion = $input['id_tipo_habitacion'];
-        $ObjHabitacion->acitvo = 1;
+        $ObjHabitacion->activo = 1;
         $validation = Validator::make($input, $this->rules, $this->message);
         if (!$validation->fails()) {
             $ObjHabitacion->save();

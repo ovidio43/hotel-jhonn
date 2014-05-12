@@ -51,28 +51,16 @@ return array(
 			'database' => __DIR__.'/../database/production.sqlite',
 			'prefix'   => '',
 		),
-
 		'mysql' => array(
 			'driver'    => 'mysql',
 			'host'      => 'localhost',
-			'database'  => 'jhonny_dbhotel',
-			'username'  => 'jhonny_jhonny',
-			'password'  => 'EyiU?AXBIJI_',
+			'database'  => 'dbhotel',
+			'username'  => 'root',
+			'password'  => '',
 			'charset'   => 'utf8',
 			'collation' => 'utf8_unicode_ci',
 			'prefix'    => '',
 		),
-//
-//		'mysql' => array(
-//			'driver'    => 'mysql',
-//			'host'      => 'localhost',
-//			'database'  => 'dbhotel',
-//			'username'  => 'root',
-//			'password'  => '',
-//			'charset'   => 'utf8',
-//			'collation' => 'utf8_unicode_ci',
-//			'prefix'    => '',
-//		),
 		'pgsql' => array(
 			'driver'   => 'pgsql',
 			'host'     => 'localhost',

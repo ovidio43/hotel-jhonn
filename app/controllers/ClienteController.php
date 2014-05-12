@@ -43,7 +43,7 @@ class ClienteController extends \BaseController {
         $ObjCliente->direccion = $input['direccion'];
         $ObjCliente->ci = $input['ci'];
         $ObjCliente->email = $input['email'];
-        $ObjCliente->acitvo = 1;
+        $ObjCliente->activo = 1;
         $validation = Validator::make($input, $this->rules, $this->message);
         if (!$validation->fails()) {
             $ObjCliente->save();
@@ -73,7 +73,7 @@ class ClienteController extends \BaseController {
         $ObjCliente->direccion = $input['direccion'];
         $ObjCliente->ci = $input['ci'];
         $ObjCliente->email = $input['email'];
-        $ObjCliente->acitvo = 1;
+        $ObjCliente->activo = 1;
         $validation = Validator::make($input, $this->rules, $this->message);
         if (!$validation->fails()) {
             $ObjCliente->save();

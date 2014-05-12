@@ -8,7 +8,7 @@ class Precio extends Eloquent {
         return $this->belongsTo('TipoHabitacion', 'id');
     }
     public function moneda() {
-         return $this->belongsTo('moneda','id');
+         return $this->belongsTo('Moneda','id');
     }
 
 }
