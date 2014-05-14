@@ -105,8 +105,87 @@ $(document).ready(function() {
             });
         }
     });
-    /***************************************/
+    /*****************calculando total **********************/
 
+    $('.cb-hab').on('click', function() {
+        var id_moneda = 0;
+        var amount = 0;
+        var total = parseFloat($('#total').val());
+        id_moneda = $('input[name=id_moneda]:checked').attr('value');
+        if (typeof (id_moneda) === 'undefined') {
+            $(this).attr('checked', false);
+            alert('Debe Seleccionar moneda para realizar los calculos');
+        } else {
+            amount = $(this).next().children('p.moneda-' + id_moneda).children('input').val();
+            if (typeof (amount) !== 'undefined') {
+                if ($(this).is(':checked')) {
+                    total += parseFloat(amount);
+                } else {
+                    total -= parseFloat(amount);
+                }
+            } else {
+                $(this).attr('checked', false);
+                alert('Esta habitación no tiene un precio con ese tipo de moneda');
+            }
+            $('#total').val(total);
+            calcularSaldo();
+        }
+
+    });
+    $('input[name=id_moneda]').on('change', function() {
+        var id_moneda = $(this).val();
+        var amount = 0;
+        var total = 0;
+        $('input.cb-hab').each(function() {
+            if ($(this).is(':checked')) {
+                amount = $(this).siblings().children('p.moneda-' + id_moneda).children('input').val();
+                if (typeof (amount) !== 'undefined') {
+                    total += parseFloat(amount);
+                } else {
+                    $(this).attr('checked', false);
+                }
+            }
+        });
+        $('#total').val(total);
+        calcularSaldo();
+    });
+
+    $('#monto').on('keyup', function(e) {
+        calcularSaldo();
+    });
+
+
+    $('.only-numeric').keypress(function(e) {
+        var charCode = (typeof e.which == "number") ? e.which : e.keyCode;
+        // Firefox will trigger this even on nonprintabel chars... allow them.
+        switch (charCode) {
+            case 8: // Backspace
+            case 0: // Arrow keys, delete, etc
+                return true;
+            default:
+        }
+
+        var lastChar = String.fromCharCode(charCode);
+
+        // Reject anything not numbers or a comma
+        if (!lastChar.match("[0-9]|.")) {
+            return false;
+        }
+
+        // Reject comma if 1st character or if we already have one
+        if (lastChar == "." && this.value.length == 0) {
+            return false;
+        }
+        if (lastChar == "." && this.value.indexOf(".") != -1) {
+            return false;
+        }
+
+        // Cut off first char if 0 and we have a comma somewhere
+        if (this.value.indexOf(".") != -1 && this.value[0] == "0") {
+            this.value = this.value.substr(1);
+        }
+        return true;
+    });
 });
 
 function sendRequest(url, method, data) {
@@ -124,4 +203,10 @@ function sendRequest(url, method, data) {
         }
     });
 }
-
+function calcularSaldo() {
+    var total = parseFloat($('#total').val());
+    var monto = parseFloat($('#monto').val());
+    var saldo = 0;
+    saldo = total - monto;
+    $('#saldo').val(saldo);
+}

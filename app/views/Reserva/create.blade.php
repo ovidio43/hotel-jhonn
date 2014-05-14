@@ -15,7 +15,7 @@ NUEVA RESERVA
     </div>
     <div class="col-sm-3">
         {{Form::label('monto', 'Monto')}}
-        {{ Form::text('monto','0',['class'=>'form-control'])}}
+        {{ Form::text('monto','0',['class'=>'form-control only-numeric'])}}
         <span class="error">{{ $errors->first('monto')}}</span>
     </div>
     <div class="col-sm-3">  
@@ -74,7 +74,7 @@ NUEVA RESERVA
             $nombreTipoH = $row->tipoHabitacion->nombre;
             ?>
             <li class="list-group-item">
-                <input type="checkbox" id="id_habitacion<?php echo $c; ?>" name="id_habitacion[]" value="<?php echo $idHab; ?>" class="rb-hab" />
+                <input type="checkbox" id="id_habitacion<?php echo $c; ?>" name="id_habitacion[]" value="<?php echo $idHab; ?>" class="cb-hab" />
                 <label for="id_habitacion<?php echo $c; ?>">
                     <p><?php echo 'Nº : ' . $nroHab; ?></p>
                     <p><?php echo ' ' . $descHab . ', Tipo : ' . $nombreTipoH; ?></p>   
@@ -82,8 +82,8 @@ NUEVA RESERVA
                     foreach ($row->tipoHabitacion->precio as $pre) {
                         $objMon = Moneda::find($pre->id_moneda);
                         ?>
-                        <p class="p-precio">
-                            <input type="hidden" value="<?php echo $pre->monto; ?>" id="moneda-<?php echo $objMon->id; ?>" >
+                        <p class="moneda-<?php echo $objMon->id; ?>">
+                            <input type="hidden" value="<?php echo $pre->monto; ?>">
                             <?php echo $pre->monto . ' ' . $objMon->simbolo . ' ' . $objMon->nombre . '(' . $objMon->pais . ')'; ?>
                         </p>
                         <?php
