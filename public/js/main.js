@@ -10,6 +10,16 @@ $(document).ready(function() {
         always_visible: $('#caledar-visible2')
     });
 
+    $('.Zebra_DatePicker').on('click', function() {
+        var ini = $('#date-start').val();
+        var end = $('#date-end').val();
+        var dias = getDias(ini, end);
+        if (!isNaN(dias)) {
+            $('#dias').val(dias);
+            $('#total').val(getTotal($('input[name=id_moneda]:checked').attr('value')));
+            calcularSaldo();
+        }
+    });
 
     $('.a-delete').on('click', function() {
         var status = confirm("Se Eliminará el Item Seleccionado!!!");
@@ -56,13 +66,6 @@ $(document).ready(function() {
             f.preventDefault();
             alert('jasdofjasñodfhlkzsdjh');
         });
-
-//        $.post(url, data, function(data) {
-//            if (data == 'ok') {
-//                currentObj.parent().parent().remove();
-//            }
-//        });
-
     });
 
     /******accion adicionar inputs para aignar precio a tipo de habitacion en modulo administracion*******/
@@ -107,53 +110,24 @@ $(document).ready(function() {
     });
     /*****************calculando total **********************/
 
-    $('.cb-hab').on('click', function() {
-        var id_moneda = 0;
-        var amount = 0;
-        var total = parseFloat($('#total').val());
-        id_moneda = $('input[name=id_moneda]:checked').attr('value');
-        if (typeof (id_moneda) === 'undefined') {
-            $(this).attr('checked', false);
-            alert('Debe Seleccionar moneda para realizar los calculos');
-        } else {
-            amount = $(this).next().children('p.moneda-' + id_moneda).children('input').val();
-            if (typeof (amount) !== 'undefined') {
-                if ($(this).is(':checked')) {
-                    total += parseFloat(amount);
-                } else {
-                    total -= parseFloat(amount);
-                }
-            } else {
-                $(this).attr('checked', false);
-                alert('Esta habitación no tiene un precio con ese tipo de moneda');
-            }
-            $('#total').val(total);
-            calcularSaldo();
-        }
-
-    });
-    $('input[name=id_moneda]').on('change', function() {
-        var id_moneda = $(this).val();
-        var amount = 0;
-        var total = 0;
-        $('input.cb-hab').each(function() {
-            if ($(this).is(':checked')) {
-                amount = $(this).siblings().children('p.moneda-' + id_moneda).children('input').val();
-                if (typeof (amount) !== 'undefined') {
-                    total += parseFloat(amount);
-                } else {
-                    $(this).attr('checked', false);
-                }
-            }
-        });
+    $('input.cb-hab').on('click', function() {
+        var id_moneda = $('input[name=id_moneda]:checked').attr('value');
+        var total = getTotal(id_moneda);
         $('#total').val(total);
         calcularSaldo();
     });
+    $('input[name=id_moneda]').on('change', function() {
+        var id_moneda = $(this).val();
+        var total = getTotal(id_moneda);
+        $('#total').val(total);
+        calcularSaldo();
+    });
+    /*************************************************/
+
 
     $('#monto').on('keyup', function(e) {
         calcularSaldo();
     });
-
 
     $('.only-numeric').keypress(function(e) {
         var charCode = (typeof e.which == "number") ? e.which : e.keyCode;
@@ -210,3 +184,25 @@ function calcularSaldo() {
     saldo = total - monto;
     $('#saldo').val(saldo);
 }
+
+function getTotal(id_moneda) {
+    var amount, total = 0;
+    var dias = parseFloat($('#dias').val());
+    $('input.cb-hab').each(function() {
+        if ($(this).is(':checked')) {
+            amount = $(this).siblings().children('p.moneda-' + id_moneda).children('input').val();
+            if (typeof (amount) !== 'undefined') {
+                total += parseFloat(amount);
+            } else {
+                $(this).attr('checked', false);
+            }
+        }
+    });
+    total = total * dias;
+    return total;
+}
+function getDias(ini, fin) {
+    return ((new Date(fin) - new Date(ini)) / 24 / 3600000) + 1;
+}
+
+
