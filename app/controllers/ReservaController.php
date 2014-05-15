@@ -13,6 +13,10 @@ class ReservaController extends \BaseController {
         'required' => 'Campo Obligatorio',
         'numeric' => 'Solo Números'
     );
+    private $concepto = array(
+        'pendiente' => 'Queda Saldo pendiente de Cobro',
+        'cancelado' => 'Sin cobros pendientes'
+    );
 
     public function __construct() {
         $this->beforeFilter(function() {
@@ -33,8 +37,8 @@ class ReservaController extends \BaseController {
     public function store() {
         $ObjReserva = new Reserva;
         $input = Input::all();
-        $ObjReserva->fecha_entrada = $input['fecha_entrada'];
-        $ObjReserva->fecha_salida = $input['fecha_salida'];
+        $ObjReserva->fecha_entrada = $input['fecha_entrada'] . ' ' . date('H:i:s'); 
+        $ObjReserva->fecha_salida = $input['fecha_salida']. ' ' . date('H:i:s');;
         $ObjReserva->descripcion = $input['descripcion'];
         $ObjReserva->estado_pago = $input['saldo'] > 0 ? 'PENDIENTE' : 'CANCELADO';
         $ObjReserva->dias = $input['dias'];
@@ -44,25 +48,24 @@ class ReservaController extends \BaseController {
         $ObjReserva->id_cliente = $input['id_cliente'];
         $validation = Validator::make($input, $this->rules, $this->message);
         if (!$validation->fails()) {
-//            $ObjReserva->save();
-            echo $ObjReserva->fecha_entrada;
-            echo '<br>';
-            echo $ObjReserva->fecha_salida;
-            echo '<br>';
-            echo $ObjReserva->descripcion;
-            echo '<br>';
-            echo $ObjReserva->estado_pago;
-            echo '<br>';
-            echo $ObjReserva->dias;
-            echo '<br>';
-            echo $ObjReserva->total;
-            echo '<br>';
-            echo $ObjReserva->activo;
-            echo '<br>';
-            echo $ObjReserva->id_trabajador;
-            echo '<br>';
-            echo $ObjReserva->id_cliente;
-            echo '<br>';
+            $ObjReserva->save();
+            foreach ($input['id_habitacion'] as $hab) {
+                $ObjHabitacionReserva = new HabitacionReserva;
+                $ObjHabitacionReserva->id_reserva = $ObjReserva->id;
+                $ObjHabitacionReserva->id_habitacion = $hab;
+                $ObjHabitacionReserva->save();
+            }
+            if ($input['monto'] > 0) {
+                $ObjPago = new Pago();
+                $ObjPago->fecha = date('Y-m-d H:i:s');
+                $ObjPago->monto = $input['monto'];
+                $ObjPago->concepto = $input['saldo'] > 0 ? $this->concepto['pendiente'] : $this->concepto['cancelado'];
+                $ObjPago->activo = 1;
+                $ObjPago->id_reserva = $ObjReserva->id;
+                $ObjPago->id_moneda = $input['id_moneda'];
+                $ObjPago->save();
+            }
+            return View::make('Reserva.index');
         } else {
             return View::make('Reserva.create')->withErrors($validation);
         }

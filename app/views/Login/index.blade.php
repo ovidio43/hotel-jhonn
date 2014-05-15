@@ -21,7 +21,6 @@
                         <h1 class="text-center">Login</h1>
                     </div>
                     <div class="modal-body">
-
                         {{ Form::open(array('url' => 'login','class'=>'form col-md-12 center-block')) }}
                         <div class="form-group">
                             <!--{{Form::label('email', 'Email',['class'=>'col-sm-3 control-label'])}}-->

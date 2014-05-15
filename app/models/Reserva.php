@@ -7,5 +7,8 @@ class Reserva extends Eloquent {
     public function habitacion() {
         return $this->belongsToMany('Habitacion', 'id_habitacion');
     }
+    public function habitacionReserva(){
+        return $this->hasMany('HabitacionReserva','id_reserva');
+    }
 
 }
