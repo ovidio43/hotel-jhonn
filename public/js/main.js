@@ -195,6 +195,7 @@ function getTotal(id_moneda) {
                 total += parseFloat(amount);
             } else {
                 $(this).attr('checked', false);
+                alert('No hay moneda asociada a la habitación ' + $(this).siblings().children().first().text());
             }
         }
     });
@@ -202,7 +203,7 @@ function getTotal(id_moneda) {
     return total;
 }
 function getDias(ini, fin) {
-    return ((new Date(fin) - new Date(ini)) / 24 / 3600000) + 1;
+    return ((new Date(fin) - new Date(ini)) / 24 / 3600000);
 }
 
 
