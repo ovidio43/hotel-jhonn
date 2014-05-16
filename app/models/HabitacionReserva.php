@@ -7,5 +7,9 @@ class HabitacionReserva extends Eloquent {
     public function reserva() {
         return $this->belongsTo('Reserva', 'id');
     }
+    
+    public function habitacion() {
+        return $this->belongsTo('Habitacion', 'id');
+    }
 
 }

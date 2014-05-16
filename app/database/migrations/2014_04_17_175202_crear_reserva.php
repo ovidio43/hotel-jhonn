@@ -13,12 +13,13 @@ class CrearReserva extends Migration {
     public function up() {
         Schema::create('reserva', function(Blueprint $table) {
             $table->increments('id');
+            $table->dateTime('fecha');
             $table->dateTime('fecha_entrada');
-            $table->dateTime('fecha_salida');            
+            $table->dateTime('fecha_salida');
             $table->string('descripcion', 500);
             $table->string('estado_pago', 20);
-             $table->integer('dias');
-             $table->float('total');
+            $table->integer('dias');
+            $table->float('total');            
             $table->string('activo', 1);
             $table->integer('id_trabajador')->unsigned();
             $table->foreign('id_trabajador')->references('id')->on('trabajador')->onDelete('cascade');

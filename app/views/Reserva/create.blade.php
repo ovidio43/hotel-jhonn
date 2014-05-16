@@ -45,7 +45,7 @@ NUEVA RESERVA
         </div>
     </div>
     <div class="col-sm-9">   
-        <input type="hidden" name="dias" id="dias" value="0">
+        <input type="hidden" name="dias" id="dias" value="0" >
         <div class="col-sm-6" id="caledar-visible1">
             {{Form::label('fecha_entrada', 'Ingreso')}}
             {{ Form::hidden('fecha_entrada','',['class'=>'form-control','id'=>'date-start'])}}

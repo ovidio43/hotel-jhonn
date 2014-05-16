@@ -14,25 +14,60 @@ LISTADO DE RESERVAS
                 <th>Total Dias</th>                
                 <th>Dias Restantes</th>       
                 <th>Estado de pago</th>                      
-                <th>Pago Pendiente</th>                
-                <th>Total</th>                                
-                <th colspan="2"></th>            
+                <th>Total</th> 
+                <th>Monto a cuenta</th> 
+                <th>Pago Pendiente</th>                                         
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>56</td> 
-                <td>jorge luis quispe</td> 
-                <td>2014-05-01</td> 
-                <td>2014-05-06</td> 
-                <td>5</td> 
-                <td>2</td> 
-                <td>Pendiente</td> 
-                <td>100</td> 
-                <td>500</td> 
-            </tr>
+            <?php
+            $objReserva = Reserva::where('estado_pago', '=', 'PENDIENTE')->orderBy('fecha','desc')->get();
+            foreach ($objReserva as $rowR) {
+                ?>
+                <tr>
+                    <td>
+                        <?php
+                        foreach ($rowR->habitacionReserva as $rowHR) {
+                            echo Habitacion::find($rowHR->id_habitacion)->nro;
+                            echo '<br>';
+                        }
+                        ?>
+                    </td>
+                    <td>
+                        <?php
+                        $objCliente = Cliente::find($rowR->id_cliente);
+                        echo $objCliente->nombre . ' ' . $objCliente->apellidoP . ' ' . $objCliente->apellidoM;
+                        ?>
+                    </td>
+                    <td><?php echo $rowR->fecha_entrada; ?></td>
+                    <td><?php echo $rowR->fecha_salida; ?></td>
+                    <td><?php echo $rowR->dias; ?></td>
+                    <td>
+                        <?php
+                        $datetime1 = new DateTime(date('Y-m-d H:i:s'));
+                        $datetime2 = new DateTime($rowR->fecha_salida);
+                        $interval = $datetime1->diff($datetime2);
+                        echo $interval->format('%R%a días');
+                        ?>
+                    </td>
+                    <td><?php echo $rowR->estado_pago; ?></td>
+                    <td><?php echo $rowR->total; ?></td>
+                    <td>
+                        <?php
+                        $monto = 0;                        
+                        foreach ($rowR->pago as $rowP) {
+                            echo $rowP->monto . '<br>';
+                            $monto+=$rowP->monto;
+                        }
+                        ?>
+                    </td>
+                    <td><?php echo ($rowR->total - $monto); ?></td>                  
+                </tr>
+                <?php
+            }
+            ?>
         </tbody>        
-    </table>
+    </table>   
 </div>
 @stop
 

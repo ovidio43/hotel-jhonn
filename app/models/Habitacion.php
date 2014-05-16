@@ -8,8 +8,8 @@ class Habitacion extends Eloquent {
         return $this->belongsTo('TipoHabitacion', 'id_tipo_habitacion');
     }
 
-    public function reserva() {
-        return $this->belongsToMany('Reserva', 'id_reserva');
+    public function habitacionReserva() {
+        return $this->hasMany('HabitacionReserva', 'id_habitacion');
     }
 
 }
