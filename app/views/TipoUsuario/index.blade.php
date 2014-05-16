@@ -21,6 +21,7 @@ TIPO USUARIO
             </tr>
         </thead>
         <tbody>
+           
             @foreach($TipoUsuario as $row)
             <tr>
                 <td>{{ $row->nombre }}</td>

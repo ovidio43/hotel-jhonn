@@ -18,7 +18,7 @@ class TipoUsuarioController extends \BaseController {
     }
 
     public function index() {
-        $ObjTipoUsuario = TipoUsuario::where('id','!=','1');
+        $ObjTipoUsuario = TipoUsuario::where('id', '!=', '1')->get();
         return View::make('TipoUsuario.index')->with('TipoUsuario', $ObjTipoUsuario);
     }
 
@@ -27,23 +27,19 @@ class TipoUsuarioController extends \BaseController {
     }
 
     public function store() {
-        $ObjTipoUsuario = new TipoUsuario;
+        $ObjTipoUsuario = new TipoUsuario();
         $input = Input::all();
         $ObjTipoUsuario->nombre = $input['nombre'];
         $ObjTipoUsuario->descripcion = $input['descripcion'];
         $validation = Validator::make($input, $this->rules, $this->message);
         if (!$validation->fails()) {
             $ObjTipoUsuario->save();
-            return Redirect::to('sistema/tipo-usuario')->with('TipoUsuario', Input::all());
+            return Redirect::to('sistema/tipo-usuario')->with('TipoUsuario', Input::all());            
         } else {
             return Redirect::back()->withErrors($validation);
         }
     }
 
-    public function show($id) {
-        $ObjTipoUsuario = TipoUsuario::find($id);
-        return View::make('TipoUsuario.show')->with('TipoUsuario', $ObjTipoUsuario);
-    }
 
     public function edit($id) {
         $ObjTipoUsuario = TipoUsuario::find($id);

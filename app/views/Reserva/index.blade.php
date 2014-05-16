@@ -21,7 +21,8 @@ LISTADO DE RESERVAS
         </thead>
         <tbody>
             <?php
-            $objReserva = Reserva::where('estado_pago', '=', 'PENDIENTE')->orderBy('fecha','desc')->get();
+//            $objReserva = Reserva::where('estado_pago', '=', 'PENDIENTE')->orderBy('fecha', 'desc')->get();
+            $objReserva = Reserva::orderBy('fecha', 'desc')->get();
             foreach ($objReserva as $rowR) {
                 ?>
                 <tr>
@@ -54,10 +55,14 @@ LISTADO DE RESERVAS
                     <td><?php echo $rowR->total; ?></td>
                     <td>
                         <?php
-                        $monto = 0;                        
-                        foreach ($rowR->pago as $rowP) {
-                            echo $rowP->monto . '<br>';
-                            $monto+=$rowP->monto;
+                        $monto = 0;
+                        if (isset($rowR->pago)) {
+                            foreach ($rowR->pago as $rowP) {
+                                echo $rowP->monto . '<br>';
+                                $monto+=$rowP->monto;
+                            }
+                        } else {
+                            echo $monto;
                         }
                         ?>
                     </td>

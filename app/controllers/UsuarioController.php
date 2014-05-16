@@ -23,7 +23,7 @@ class UsuarioController extends \BaseController {
     }
 
     public function index() {
-        $ObjUsuario = Usuario::where('id_tipo_usuario','!=','1');
+        $ObjUsuario = Usuario::where('id_tipo_usuario','!=','1')->get();
         return View::make('Usuario.index')->with('Usuario', $ObjUsuario);
     }
 

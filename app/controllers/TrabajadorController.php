@@ -25,7 +25,7 @@ class TrabajadorController extends \BaseController {
     }
 
     public function index() {
-        $ObjTrabajador = Trabajador::where('id','!=','1')->orderBy('nombre','asc');
+        $ObjTrabajador = Trabajador::where('id','!=','1')->orderBy('nombre','asc')->get();
         return View::make('Trabajador.index')->with('Trabajador', $ObjTrabajador);
     }
 

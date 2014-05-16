@@ -38,9 +38,10 @@ class ReservaController extends \BaseController {
         $input = Input::all();
         $validation = Validator::make($input, $this->rules, $this->message);
         if (!$validation->fails()) {
-            DB::transaction(function()use ($input) {
+            DB::transaction(function() use ($input) {
                 $id_reserva = $this->saveRserva($input);
                 $this->saveHabitacionReserva($input['id_habitacion'], $id_reserva);
+                $this->uploadEstadoHabitacion($input['id_habitacion']);
                 if ($input['monto'] > 0) {
                     $this->savePago($input, $id_reserva);
                 }
@@ -64,7 +65,7 @@ class ReservaController extends \BaseController {
     }
 
     private function saveRserva($input) {
-        $ObjReserva = new Reserva;
+        $ObjReserva = new Reserva();
         $ObjReserva->fecha = date('Y-m-d H:i:s');
         $ObjReserva->fecha_entrada = $input['fecha_entrada'] . ' ' . date('H:i:s');
         $ObjReserva->fecha_salida = $input['fecha_salida'] . ' ' . date('H:i:s');
@@ -81,7 +82,7 @@ class ReservaController extends \BaseController {
 
     private function saveHabitacionReserva($id_habitacion, $id_reserva) {
         foreach ($id_habitacion as $hab) {
-            $ObjHabitacionReserva = new HabitacionReserva;
+            $ObjHabitacionReserva = new HabitacionReserva();
             $ObjHabitacionReserva->id_reserva = $id_reserva;
             $ObjHabitacionReserva->id_habitacion = $hab;
             $ObjHabitacionReserva->save();
@@ -97,6 +98,14 @@ class ReservaController extends \BaseController {
         $ObjPago->id_reserva = $id_reserva;
         $ObjPago->id_moneda = $input['id_moneda'];
         $ObjPago->save();
+    }
+
+    private function uploadEstadoHabitacion($id_habitacion) {
+        foreach ($id_habitacion as $hab) {
+            $ObjHabitacion = Habitacion::find($hab);
+            $ObjHabitacion->estado = 'OCUPADO';
+            $ObjHabitacion->save();
+        }
     }
 
 }
