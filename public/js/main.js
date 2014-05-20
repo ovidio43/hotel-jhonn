@@ -9,8 +9,7 @@ $(document).ready(function() {
         direction: 1,
         always_visible: $('#caledar-visible2')
     });
-
-    $('.Zebra_DatePicker').on('click', function() {
+    $('body').on('click', '.Zebra_DatePicker', function() {
         var ini = $('#date-start').val();
         var end = $('#date-end').val();
         var dias = getDias(ini, end);
@@ -20,6 +19,7 @@ $(document).ready(function() {
             calcularSaldo();
         }
     });
+
 
     $('.a-delete').on('click', function() {
         var status = confirm("Se Eliminará el Item Seleccionado!!!");
@@ -55,18 +55,7 @@ $(document).ready(function() {
         var data = $(this).serialize();
         sendRequest(url, 'POST', data);
     });
-    $('body').on('click', '.a-delete-ajax', function(e) {
-        e.preventDefault();
-        var currentObj = $(this);
-        var currentform = currentObj.next('form');
-        var url = currentform.attr('action');
-        var data = currentform.serialize();
 
-        currentObj.submit(function(f) {
-            f.preventDefault();
-            alert('jasdofjasñodfhlkzsdjh');
-        });
-    });
 
     /******accion adicionar inputs para aignar precio a tipo de habitacion en modulo administracion*******/
     $('body').on('click', '#add-price', function(e) {
@@ -109,25 +98,28 @@ $(document).ready(function() {
         }
     });
     /*****************calculando total **********************/
+    $('body').on('click', 'button.close', function() {
+        window.location = "create";
+    });
 
-    $('input.cb-hab').on('click', function() {
-        var id_moneda = $('input[name=id_moneda]:checked').attr('value');
-        var total = getTotal(id_moneda);
-        $('#total').val(total);
-        calcularSaldo();
-    });
-    $('input[name=id_moneda]').on('change', function() {
-        var id_moneda = $(this).val();
-        var total = getTotal(id_moneda);
-        $('#total').val(total);
-        calcularSaldo();
-    });
+//    $('input.cb-hab').on('click', function() {
+//        var id_moneda = $('input[name=id_moneda]:checked').attr('value');
+//        var total = getTotal(id_moneda);
+//        $('#total').val(total);
+//        calcularSaldo();
+//    });
+//    $('input[name=id_moneda]').on('change', function() {
+//        var id_moneda = $(this).val();
+//        var total = getTotal(id_moneda);
+//        $('#total').val(total);
+//        calcularSaldo();
+//    });
     /*************************************************/
 
 
-    $('#monto').on('keyup', function(e) {
-        calcularSaldo();
-    });
+//    $('#monto').on('keyup', function(e) {
+//        calcularSaldo();
+//    });
 
     $('.only-numeric').keypress(function(e) {
         var charCode = (typeof e.which == "number") ? e.which : e.keyCode;

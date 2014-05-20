@@ -14,6 +14,7 @@ class CrearPrecio extends Migration {
         Schema::create('precio', function(Blueprint $table) {
             $table->increments('id');
             $table->float('monto');
+            $table->integer('personas');
             $table->integer('id_moneda')->unsigned();
             $table->foreign('id_moneda')->references('id')->on('moneda')->onDelete('cascade');
             $table->integer('id_tipo_habitacion')->unsigned();

@@ -31,7 +31,7 @@ class ReservaController extends \BaseController {
     }
 
     public function create() {
-        return View::make('Reserva.create');
+        return View::make('Reserva.available');
     }
 
     public function store() {
@@ -106,6 +106,16 @@ class ReservaController extends \BaseController {
             $ObjHabitacion->estado = 'OCUPADO';
             $ObjHabitacion->save();
         }
+    }
+
+    public function getDetail($id_habitacion) {
+        $ObjHabitacion = Habitacion::find($id_habitacion);
+        return View::make('Reserva.detail')->with('Habitacion', $ObjHabitacion);
+    }
+
+    public function show($id) {
+        $ObjHabitacion = Habitacion::find($id);
+        return View::make('Reserva.detail')->with('Habitacion', $ObjHabitacion);
     }
 
 }

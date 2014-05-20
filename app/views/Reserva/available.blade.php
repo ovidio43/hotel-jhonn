@@ -13,7 +13,7 @@ NUEVA RESERVA
         $descHab = $row->tipoHabitacion->descripcion;
         $nombreTipoH = $row->tipoHabitacion->nombre;
         ?>
-        <a href="<?php echo URL::to('reservaciones/detail/' . $idHab); ?>" class="list-group-item obj-hab">
+        <a href="<?php echo URL::to('reservaciones/' . $idHab); ?>" class="list-group-item obj-hab">
             <strong># <?php echo $nroHab; ?></strong>
             <p><?php echo $descHab . ' ' . $nombreTipoH; ?></p>
         </a>

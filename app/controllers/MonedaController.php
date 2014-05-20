@@ -76,6 +76,4 @@ class MonedaController extends \BaseController {
         $ObjMoneda = Moneda::orderBy('nombre', 'asc')->get();
         return View::make('Parametros.Moneda.prices')->with('Moneda', $ObjMoneda)->with('numPrices',$numPrices);
     }
-
-
 }

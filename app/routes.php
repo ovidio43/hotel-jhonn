@@ -34,7 +34,7 @@ Route::resource('administracion/habitacion', 'HabitacionController');
 Route::resource('administracion/tipo-habitacion', 'TipoHabitacionController');
 
 Route::resource('reservaciones', 'ReservaController');
-
+Route::get('reservaciones/detail/{id_habitacion}', 'ReservaController@getDetail');
 
 /* * ****************pticiones ajax************************ */
 Route::resource('sistema/parametros/moneda', 'MonedaController');

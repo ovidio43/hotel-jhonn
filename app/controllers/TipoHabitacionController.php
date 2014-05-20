@@ -39,6 +39,7 @@ class TipoHabitacionController extends \BaseController {
             for ($i = 1; $i <= $input['prices']; $i++) {
                 $objPrecio = new Precio;
                 $objPrecio->monto = $input['monto' . $i];
+                 $objPrecio->personas = $input['personas' . $i];
                 $objPrecio->id_moneda = $input['id_moneda' . $i];
                 $objPrecio->id_tipo_habitacion = $ObjTipoHabitacion->id;
                 $objPrecio->save();
@@ -69,6 +70,7 @@ class TipoHabitacionController extends \BaseController {
                     $objPrecio = new Precio;
                 }
                 $objPrecio->monto = $input['monto' . $i];
+                $objPrecio->personas = $input['personas' . $i];
                 $objPrecio->id_moneda = $input['id_moneda' . $i];
                 $objPrecio->id_tipo_habitacion = $ObjTipoHabitacion->id;
                 $objPrecio->save();

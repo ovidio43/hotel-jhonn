@@ -32,7 +32,7 @@ NUEVO TIPO HABITACION
 <!-------------------------------------------->
 
 <div class="form-group" id="content-button">
-    <div class="col-sm-offset-2 col-sm-10">
+    <div class="col-sm-offset-8 col-sm-10">
         {{ Form::submit('Guardar',['class'=>'btn btn-default'])}}
     </div>
 </div>
