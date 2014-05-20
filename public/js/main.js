@@ -15,7 +15,7 @@ $(document).ready(function() {
         var dias = getDias(ini, end);
         if (!isNaN(dias)) {
             $('#dias').val(dias);
-            $('#total').val(getTotal($('input[name=id_moneda]:checked').attr('value')));
+            $('#total').val(getTotal());
             calcularSaldo();
         }
     });
@@ -97,29 +97,30 @@ $(document).ready(function() {
             });
         }
     });
-    /*****************calculando total **********************/
-    $('body').on('click', 'button.close', function() {
+
+    $('body').on('click', 'button.detail-close', function() {
         window.location = "create";
     });
+    $('body').on('click', 'button.close', function() {
+        $('#loginModal').removeClass('show');
+    });
 
-//    $('input.cb-hab').on('click', function() {
-//        var id_moneda = $('input[name=id_moneda]:checked').attr('value');
-//        var total = getTotal(id_moneda);
-//        $('#total').val(total);
-//        calcularSaldo();
-//    });
-//    $('input[name=id_moneda]').on('change', function() {
-//        var id_moneda = $(this).val();
-//        var total = getTotal(id_moneda);
-//        $('#total').val(total);
-//        calcularSaldo();
-//    });
-    /*************************************************/
-
-
-//    $('#monto').on('keyup', function(e) {
-//        calcularSaldo();
-//    });
+    $('input[name=id_precio]').on('click', function() {
+        $('#id_moneda').val($(this).attr('moneda_id'));
+        $('#total').val(getTotal());
+        calcularSaldo();
+    });
+    $('#monto').on('keyup', function(e) {
+        calcularSaldo();
+    });
+    $('.realizar-cobro').on('click', function(e) {
+        e.preventDefault();
+        var url = $(this).attr('href');
+        $.get(url, function(data) {
+            $('#loginModal').empty().append(data);
+            $('#loginModal').addClass('show');
+        });
+    });
 
     $('.only-numeric').keypress(function(e) {
         var charCode = (typeof e.which == "number") ? e.which : e.keyCode;
@@ -176,22 +177,11 @@ function calcularSaldo() {
     saldo = total - monto;
     $('#saldo').val(saldo);
 }
-
-function getTotal(id_moneda) {
-    var amount, total = 0;
+function getTotal() {
+    var total = 0;
     var dias = parseFloat($('#dias').val());
-    $('input.cb-hab').each(function() {
-        if ($(this).is(':checked')) {
-            amount = $(this).siblings().children('p.moneda-' + id_moneda).children('input').val();
-            if (typeof (amount) !== 'undefined') {
-                total += parseFloat(amount);
-            } else {
-                $(this).attr('checked', false);
-                alert('No hay moneda asociada a la habitación ' + $(this).siblings().children().first().text());
-            }
-        }
-    });
-    total = total * dias;
+    var amount = parseFloat($('input[name=id_precio]:checked').attr('title'));
+    total = (amount * dias);
     return total;
 }
 function getDias(ini, fin) {

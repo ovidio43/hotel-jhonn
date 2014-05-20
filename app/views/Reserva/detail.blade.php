@@ -6,30 +6,35 @@ NUEVA RESERVA
 <div class="modal-dialog" style="width: 100%;">
     <div class="modal-content">
         <div class="modal-header">
-            <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+            <button aria-hidden="true" data-dismiss="modal" class="detail-close close" type="button">×</button>
             <h5 class="text-center"><strong>Nueva Reservación</strong></h5>
         </div>
         <div class="modal-body">
-            {{ Form::open(array('url' => 'reservaciones/create','class'=>'form-horizontal')) }} 
+            {{ Form::open(array('url' => 'reservaciones/detail','class'=>'form-horizontal')) }} 
             <div class="form-group">
                 <ul class="list-group">
-                    <li class="list-group-item"><strong>Habitacion Nº : </strong><?php echo $Habitacion->nro; ?></li>
+                    <li class="list-group-item"><strong>Habitacion Nº : </strong>
+                        <?php echo $Habitacion->nro; ?>
+                        <input type="hidden" name="id_habitacion" value="<?php echo $Habitacion->id; ?>">
+                    </li>
                     <li class="list-group-item"><strong>Tipo de Habitación: </strong> <?php ?><?php echo $Habitacion->tipoHabitacion->nombre; ?></li>
                     <li class="list-group-item"><strong>Descripción: </strong><?php echo $Habitacion->tipoHabitacion->descripcion; ?></li>
                     <li class="list-group-item"><strong>Seleccione Precio : </strong>
                         <ul class="list-group">
+                            <input type="hidden" id="id_moneda" name="id_moneda" value="">
                             <?php
                             $c = 0;
+
                             foreach ($Habitacion->tipoHabitacion->precio as $rowPrecio) {
                                 $objMon = Moneda::find($rowPrecio->id_moneda);
                                 ?>
-                                <li class="list-group-item">
-                                    <input type="radio" id="id_precio<?php echo $c; ?>" name="id_precio" value="<?php echo $rowPrecio->id; ?>">
+                                <li class="list-group-item">                                    
+                                    <input type="radio" id="id_precio<?php echo $c; ?>" name="id_precio" value="<?php echo $rowPrecio->id; ?>" title="<?php echo $rowPrecio->monto; ?>" moneda_id="<?php echo $objMon->id; ?>">
                                     <label for="id_precio<?php echo $c; ?>" title="<?php echo $objMon->nombre . ' (' . $objMon->pais . ')'; ?>"> 
                                         <?php
-                                        echo 'Personas '. $rowPrecio->personas.' : ' ;
+                                        echo 'Personas ' . $rowPrecio->personas . ' : ';
                                         echo $rowPrecio->monto;
-                                        echo $objMon->simbolo;                                        
+                                        echo $objMon->simbolo;
                                         ?>
                                     </label>
                                     <?php
@@ -44,7 +49,7 @@ NUEVA RESERVA
                 </ul>
             </div> 
             <span class="error">{{ $errors->first('id_precio')}}</span>
-            
+
             <div class="form-group">  
                 <div class="col-sm-4">
                     {{Form::label('monto', 'Monto')}}

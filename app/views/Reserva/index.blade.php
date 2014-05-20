@@ -17,6 +17,7 @@ LISTADO DE RESERVAS
                 <th>Total</th> 
                 <th>Monto a cuenta</th> 
                 <th>Pago Pendiente</th>                                         
+                <th></th>                                         
             </tr>
         </thead>
         <tbody>
@@ -56,23 +57,37 @@ LISTADO DE RESERVAS
                     <td>
                         <?php
                         $monto = 0;
-                        if (isset($rowR->pago)) {
+                        if ($rowR->pago) {
                             foreach ($rowR->pago as $rowP) {
-                                echo $rowP->monto . '<br>';
                                 $monto+=$rowP->monto;
+                                echo $rowP->monto . '<br>';
                             }
                         } else {
                             echo $monto;
                         }
                         ?>
                     </td>
-                    <td><?php echo ($rowR->total - $monto); ?></td>                  
+                    <td><?php echo ($rowR->total - $monto); ?></td>   
+                    <td>
+                        <?php
+                        if ($monto < $rowR->total) {
+                            ?>
+                            <a href="{{URL::to('reservaciones/realizar-cobro')}}/<?php echo $rowR->id; ?>" class="realizar-cobro" title="Realizar Cobro" >
+                                <span class="glyphicon glyphicon-usd"></span>
+                            </a>
+                            <?php
+                        }
+                        ?>
+                    </td>
                 </tr>
                 <?php
             }
             ?>
         </tbody>        
     </table>   
+</div>
+<div id="loginModal" class="modal" tabindex="-1" role="dialog" aria-hidden="true">
+    
 </div>
 @stop
 

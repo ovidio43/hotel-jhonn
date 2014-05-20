@@ -32,9 +32,9 @@ Route::resource('administracion/trabajador', 'TrabajadorController');
 Route::resource('administracion/cliente', 'ClienteController');
 Route::resource('administracion/habitacion', 'HabitacionController');
 Route::resource('administracion/tipo-habitacion', 'TipoHabitacionController');
-
 Route::resource('reservaciones', 'ReservaController');
-Route::get('reservaciones/detail/{id_habitacion}', 'ReservaController@getDetail');
+Route::resource('reservaciones/detail', 'ReservaController@saveReservation');
+Route::get('reservaciones/realizar-cobro/{id_reserva}', 'ReservaController@realizarCobro');
 
 /* * ****************pticiones ajax************************ */
 Route::resource('sistema/parametros/moneda', 'MonedaController');
