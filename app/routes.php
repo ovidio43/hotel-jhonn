@@ -30,11 +30,17 @@ Route::get('sistema/parametros', function() {
 
 Route::resource('administracion/trabajador', 'TrabajadorController');
 Route::resource('administracion/cliente', 'ClienteController');
+Route::get('cliente/nuevo', 'ClienteController@nuevoCliente');
+Route::post('cliente/guardar', 'ClienteController@guardarCliente');
+Route::get('reservaciones/cliente/autocompletar', 'ClienteController@autocompletarCliente');
+
 Route::resource('administracion/habitacion', 'HabitacionController');
 Route::resource('administracion/tipo-habitacion', 'TipoHabitacionController');
 Route::resource('reservaciones', 'ReservaController');
 Route::resource('reservaciones/detail', 'ReservaController@saveReservation');
 Route::get('reservaciones/realizar-cobro/{id_reserva}', 'ReservaController@realizarCobro');
+Route::post('reservaciones/cobrar/{id_reserva}', 'ReservaController@confirmarCobro');
+Route::get('reservaciones/liberar/{id_reserva}', 'ReservaController@liberar');
 
 /* * ****************pticiones ajax************************ */
 Route::resource('sistema/parametros/moneda', 'MonedaController');

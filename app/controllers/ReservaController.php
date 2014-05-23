@@ -7,7 +7,8 @@ class ReservaController extends \BaseController {
         'fecha_salida' => 'Required',
         'total' => 'Required|numeric',
         'id_cliente' => 'Required',
-        'id_habitacion' => 'Required'
+        'id_habitacion' => 'Required',
+        'id_precio' => 'Required'
     );
     private $message = array(
         'required' => 'Campo Obligatorio',
@@ -40,21 +41,7 @@ class ReservaController extends \BaseController {
     }
 
     public function store() {
-//        $input = Input::all();
-//        $validation = Validator::make($input, $this->rules, $this->message);
-//        if (!$validation->fails()) {
-//            DB::transaction(function() use ($input) {
-//                $id_reserva = $this->saveRserva($input);
-//                $this->saveHabitacionReserva($input['id_habitacion'], $id_reserva);
-//                $this->uploadEstadoHabitacion($input['id_habitacion']);
-//                if ($input['monto'] > 0) {
-//                    $this->savePago($input, $id_reserva);
-//                }
-//            });
-//            return View::make('Reserva.index');
-//        } else {
-//            return View::make('Reserva.create')->withErrors($validation);
-//        }
+        
     }
 
     public function saveReservation() {
@@ -63,7 +50,7 @@ class ReservaController extends \BaseController {
         if (!$validation->fails()) {
             DB::transaction(function() use ($input) {
                 $id_reserva = $this->saveRserva($input);
-                $this->saveHabitacionReserva($input['id_habitacion'], $id_reserva);
+                $this->saveHabitacionReserva($input['id_habitacion'], $id_reserva, $input['id_precio']);
                 $this->uploadEstadoHabitacion($input['id_habitacion']);
                 if ($input['monto'] > 0) {
                     $this->savePago($input, $id_reserva);
@@ -72,7 +59,8 @@ class ReservaController extends \BaseController {
             return View::make('Reserva.index');
         } else {
             $ObjHabitacion = Habitacion::find($input['id_habitacion']);
-            return View::make('Reserva.detail')->with('Habitacion', $ObjHabitacion)->withErrors($validation);
+            return Redirect::to('reservaciones/' . $input['id_habitacion'])->with('Habitacion', $ObjHabitacion)->withErrors($validation);
+//            return View::make('Reserva.detail')->with('Habitacion', $ObjHabitacion)->withErrors($validation);
         }
     }
 
@@ -104,8 +92,9 @@ class ReservaController extends \BaseController {
         return $ObjReserva->id;
     }
 
-    private function saveHabitacionReserva($id_habitacion, $id_reserva) {
+    private function saveHabitacionReserva($id_habitacion, $id_reserva, $id_precio) {
         $ObjHabitacionReserva = new HabitacionReserva();
+        $ObjHabitacionReserva->id_precio = $id_precio;
         $ObjHabitacionReserva->id_reserva = $id_reserva;
         $ObjHabitacionReserva->id_habitacion = $id_habitacion;
         $ObjHabitacionReserva->save();
@@ -129,8 +118,44 @@ class ReservaController extends \BaseController {
     }
 
     public function realizarCobro($id_reserva) {
-        $objReserva=  Reserva::find($id_reserva);
-         return View::make('Reserva.cobrar')->with('Reserva',$objReserva);
-         }
+        $objReserva = Reserva::find($id_reserva);
+        return View::make('Reserva.cobrar')->with('Reserva', $objReserva);
+    }
+
+    public function confirmarCobro($id_reserva) {
+        $objReserva = Reserva::find($id_reserva);
+        $input = Input::all();
+
+        if (count($objReserva->pago) > 0) {
+            $input['id_moneda'] = $objReserva->pago->first()->id_moneda;
+        }
+        $input['saldo'] = ($input['total'] - ($input['monto'] + $input['monto-cuenta']));
+        DB::transaction(function() use ($input, $id_reserva) {
+            $this->savePago($input, $id_reserva);
+            if ($input['saldo'] <= 0) {
+                $this->uploadEstadoPagoReserva($id_reserva);
+            }
+        });
+        $newObjReserva = Reserva::find($id_reserva);
+        return View::make('Reserva.confirmado')->with('Reserva', $newObjReserva);
+    }
+
+    public function uploadEstadoPagoReserva($id_reserva) {
+        $objReserva = Reserva::find($id_reserva);
+        $objReserva->estado_pago = 'CANCELADO';
+        $objReserva->save();
+    }
+
+    public function liberar($id_reserva) {
+        DB::transaction(function() use ($id_reserva) {
+            $reserva = Reserva::find($id_reserva);
+            $reserva->activo = '0';
+            $reserva->save();
+            $Habitacion = Habitacion::find($reserva->habitacionReserva->id_habitacion);
+            $Habitacion->estado = 'LIBRE';
+            $Habitacion->save();
+            echo 'ok';
+        });
+    }
 
 }

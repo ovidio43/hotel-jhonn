@@ -9,7 +9,7 @@ class Habitacion extends Eloquent {
     }
 
     public function habitacionReserva() {
-        return $this->hasMany('HabitacionReserva', 'id_habitacion');
+        return $this->hasOne('HabitacionReserva', 'id_habitacion');
     }
 
 }

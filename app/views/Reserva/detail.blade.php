@@ -22,6 +22,7 @@ NUEVA RESERVA
                     <li class="list-group-item"><strong>Seleccione Precio : </strong>
                         <ul class="list-group">
                             <input type="hidden" id="id_moneda" name="id_moneda" value="">
+                            <span class="error">{{ $errors->first('id_precio')}}</span>
                             <?php
                             $c = 0;
 
@@ -47,14 +48,11 @@ NUEVA RESERVA
                         </ul>
                     </li>      
                 </ul>
-            </div> 
-            <span class="error">{{ $errors->first('id_precio')}}</span>
-
+            </div>             
             <div class="form-group">  
                 <div class="col-sm-4">
                     {{Form::label('monto', 'Monto')}}
-                    {{ Form::text('monto','0',['class'=>'form-control only-numeric'])}}
-                    <span class="error">{{ $errors->first('monto')}}</span>
+                    {{ Form::text('monto','0',['class'=>'form-control only-numeric'])}}                    
                 </div>  
                 <div class="col-sm-4">  
                     {{Form::label('total', 'Total')}}
@@ -69,13 +67,22 @@ NUEVA RESERVA
             <div class="form-group">   
                 <div class="col-sm-3">
                     {{Form::label('id_cliente', 'Cliente')}} 
-                    <a href="javascript:void(0);"><span class="glyphicon glyphicon-plus"></span></a>
+                    <a href="{{URL::to('cliente/nuevo')}}" id="nuevo-cliente"><span class="glyphicon glyphicon-plus"></span></a>
                     <select name="id_cliente" id="id_cliente" class="form-control" >
                         <option value="">...........</option>
                         @foreach(Cliente::all() as $row)
                         <option value="{{$row->id}}">{{$row->nombre.' '.$row->apellidoP.' '.$row->apellidoM}}</option>
                         @endforeach            
                     </select>        
+                   
+                    <!---custom autocompletar   -->
+<!--                    <input type="text" value="" name="id_cliente" id="id_cliente" >
+                    <div class="list-group">
+                        <a href="#" class="list-group-item">jkshdfljadh</a>                        
+                        <a href="#" class="list-group-item">jkshdfljadh</a>                        
+                        <a href="#" class="list-group-item">jkshdfljadh</a>                                                                      
+                    </div>-->
+                    <!---------------------------------->
                     <span class="error">{{ $errors->first('id_cliente')}}</span>
                     <div >
                         {{Form::label('descripcion', 'Descripción de Reserva')}}
@@ -104,5 +111,8 @@ NUEVA RESERVA
             {{ Form::close() }}
         </div>         
     </div>
+</div>
+<div id="loginModal" class="modal" tabindex="-1" role="dialog" aria-hidden="true">
+
 </div>
 @stop

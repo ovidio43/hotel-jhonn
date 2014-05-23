@@ -3,7 +3,7 @@
 NUEVA RESERVA
 @stop
 @section('content')
-<div class="list-group over-flow-y">    
+<div class="list-group ">    
     <?php
     $c = 1;
     $objhab = Habitacion::where('estado', '=', 'LIBRE')->get();

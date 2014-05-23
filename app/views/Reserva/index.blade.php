@@ -7,7 +7,7 @@ LISTADO DE RESERVAS
     <table class="table table-striped">
         <thead>            
             <tr>
-                <th># Habitación</th>                
+                <th>Habitación</th>                
                 <th>Cliente</th>                
                 <th>Ingreso</th>                
                 <th>Salida</th>                
@@ -17,30 +17,22 @@ LISTADO DE RESERVAS
                 <th>Total</th> 
                 <th>Monto a cuenta</th> 
                 <th>Pago Pendiente</th>                                         
+                <th>Moneda</th>                                         
                 <th></th>                                         
             </tr>
         </thead>
         <tbody>
             <?php
-//            $objReserva = Reserva::where('estado_pago', '=', 'PENDIENTE')->orderBy('fecha', 'desc')->get();
-            $objReserva = Reserva::orderBy('fecha', 'desc')->get();
+            $objReserva = Reserva::orderBy('fecha', 'desc')->where('activo', '=', '1')->get();
             foreach ($objReserva as $rowR) {
+                $Habitacion = Habitacion::find($rowR->habitacionReserva->id_habitacion);
+                $ObjPrecio = Precio::find($rowR->habitacionReserva->id_precio);
+                $objMoneda = Moneda::find($ObjPrecio->id_moneda);
+                $objCliente = Cliente::find($rowR->id_cliente);
                 ?>
-                <tr>
-                    <td>
-                        <?php
-                        foreach ($rowR->habitacionReserva as $rowHR) {
-                            echo Habitacion::find($rowHR->id_habitacion)->nro;
-                            echo '<br>';
-                        }
-                        ?>
-                    </td>
-                    <td>
-                        <?php
-                        $objCliente = Cliente::find($rowR->id_cliente);
-                        echo $objCliente->nombre . ' ' . $objCliente->apellidoP . ' ' . $objCliente->apellidoM;
-                        ?>
-                    </td>
+                <tr id="<?php echo $rowR->id; ?>">
+                    <td><?php echo '# ' . $Habitacion->nro; ?></td>
+                    <td><?php echo $objCliente->nombre . ' ' . $objCliente->apellidoP . ' ' . $objCliente->apellidoM; ?></td>
                     <td><?php echo $rowR->fecha_entrada; ?></td>
                     <td><?php echo $rowR->fecha_salida; ?></td>
                     <td><?php echo $rowR->dias; ?></td>
@@ -57,7 +49,7 @@ LISTADO DE RESERVAS
                     <td>
                         <?php
                         $monto = 0;
-                        if ($rowR->pago) {
+                        if (count($rowR->pago) > 0) {
                             foreach ($rowR->pago as $rowP) {
                                 $monto+=$rowP->monto;
                                 echo $rowP->monto . '<br>';
@@ -65,15 +57,22 @@ LISTADO DE RESERVAS
                         } else {
                             echo $monto;
                         }
-                        ?>
+                        ?>           
                     </td>
                     <td><?php echo ($rowR->total - $monto); ?></td>   
+                    <td><?php echo $objMoneda->simbolo; ?></td> 
                     <td>
                         <?php
                         if ($monto < $rowR->total) {
                             ?>
                             <a href="{{URL::to('reservaciones/realizar-cobro')}}/<?php echo $rowR->id; ?>" class="realizar-cobro" title="Realizar Cobro" >
                                 <span class="glyphicon glyphicon-usd"></span>
+                            </a>
+                            <?php
+                        } else {
+                            ?>
+                            <a href="{{URL::to('reservaciones/liberar')}}/<?php echo $rowR->id; ?>" class="liberar" title="Liberar Habitación" >
+                                Liberar
                             </a>
                             <?php
                         }
@@ -87,7 +86,7 @@ LISTADO DE RESERVAS
     </table>   
 </div>
 <div id="loginModal" class="modal" tabindex="-1" role="dialog" aria-hidden="true">
-    
+
 </div>
 @stop
 

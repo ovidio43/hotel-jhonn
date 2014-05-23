@@ -16,7 +16,9 @@ $(document).ready(function() {
         if (!isNaN(dias)) {
             $('#dias').val(dias);
             $('#total').val(getTotal());
-            calcularSaldo();
+            var total = parseFloat($('#total').val());
+            var monto = parseFloat($('#monto').val());
+            $('#saldo').val(getSaldo(total, monto));
         }
     });
 
@@ -105,54 +107,95 @@ $(document).ready(function() {
         $('#loginModal').removeClass('show');
     });
 
-    $('input[name=id_precio]').on('click', function() {
+    $('body').on('click', 'input[name=id_precio]', function() {
         $('#id_moneda').val($(this).attr('moneda_id'));
         $('#total').val(getTotal());
-        calcularSaldo();
+        var total = parseFloat($('#total').val());
+        var monto = parseFloat($('#monto').val());
+        $('#saldo').val(getSaldo(total, monto));
     });
-    $('#monto').on('keyup', function(e) {
-        calcularSaldo();
+
+    $('body').on('focusout', '#monto', function(e) {
+        if (isNaN(parseFloat(($(this).val())))) {
+            $(this).val(0);
+        }
     });
-    $('.realizar-cobro').on('click', function(e) {
+    $('body').on('keyup', '#monto', function(e) {
+        var total = parseFloat($('#total').val());
+        var monto = parseFloat($('#monto').val());
+        if (monto > total) {
+            $('#monto').val(total);
+            monto = total;
+        }
+        $('#saldo').val(getSaldo(total, monto));
+    });
+    $('body').on('click', '.realizar-cobro', function(e) {
         e.preventDefault();
         var url = $(this).attr('href');
+        $('.custom-loading').show();
         $.get(url, function(data) {
             $('#loginModal').empty().append(data);
+        }).complete(function() {
             $('#loginModal').addClass('show');
+            $('.custom-loading').hide();
         });
     });
 
-    $('.only-numeric').keypress(function(e) {
-        var charCode = (typeof e.which == "number") ? e.which : e.keyCode;
-        // Firefox will trigger this even on nonprintabel chars... allow them.
-        switch (charCode) {
-            case 8: // Backspace
-            case 0: // Arrow keys, delete, etc
-                return true;
-            default:
-        }
-
-        var lastChar = String.fromCharCode(charCode);
-
-        // Reject anything not numbers or a comma
-        if (!lastChar.match("[0-9]|.")) {
-            return false;
-        }
-
-        // Reject comma if 1st character or if we already have one
-        if (lastChar == "." && this.value.length == 0) {
-            return false;
-        }
-        if (lastChar == "." && this.value.indexOf(".") != -1) {
-            return false;
-        }
-
-        // Cut off first char if 0 and we have a comma somewhere
-        if (this.value.indexOf(".") != -1 && this.value[0] == "0") {
-            this.value = this.value.substr(1);
-        }
-        return true;
+    $('body').on('click', '#cobrar', function(e) {
+        e.preventDefault()
+        var thisObj = $(this);
+        var data = $('#custom-form').serialize();
+        var url = thisObj.attr('href');
+        $('.custom-loading').show();
+        $.post(url, data, function(data) {
+            $('tr#' + thisObj.next('input').val()).empty().append(data);
+        }).complete(function() {
+            $('#loginModal').removeClass('show');
+            $('.custom-loading').hide();
+        });
     });
+    $('body').on('click', '.liberar', function(e) {
+        e.preventDefault();
+        var thisObj = $(this);
+        var url = thisObj.attr('href');
+        var status = confirm("¿Está Seguro de liberar la Reserva Seleccionada?");
+        if (status) {
+            $('.custom-loading').show();
+            $.get(url, function(data) {
+                if (data === 'ok') {
+                    thisObj.parent().parent().remove();
+                }
+            }).complete(function() {
+                $('.custom-loading').hide();
+            });
+        }
+    });
+
+    $('body').on('click', '#nuevo-cliente', function(e) {
+        e.preventDefault();
+        var thisObj = $(this);
+        var url = thisObj.attr('href');
+        $('.custom-loading').show();
+        $.get(url, function(data) {
+            $('#loginModal').empty().append(data);
+            $('#loginModal').addClass('show');
+        }).complete(function() {
+            $('.custom-loading').hide();
+        });
+    });
+    $('body').on('click', '#guardar-cliente', function(e) {
+        e.preventDefault();
+        $.post($(this).attr('href'), $("#new-client").serialize(), function(data) {
+            if (data === 'ok') {
+                $('#loginModal').removeClass('show');
+            } else {
+                $('#loginModal').empty().append(data);
+            }
+        }).complete(function() {
+            $('.custom-loading').hide();
+        });
+    });
+  
 });
 
 function sendRequest(url, method, data) {
@@ -170,18 +213,22 @@ function sendRequest(url, method, data) {
         }
     });
 }
-function calcularSaldo() {
-    var total = parseFloat($('#total').val());
-    var monto = parseFloat($('#monto').val());
+function getSaldo(total, monto) {
     var saldo = 0;
     saldo = total - monto;
-    $('#saldo').val(saldo);
+    if (isNaN(saldo)) {
+        saldo = 0;
+    }
+    return saldo;
 }
 function getTotal() {
     var total = 0;
     var dias = parseFloat($('#dias').val());
     var amount = parseFloat($('input[name=id_precio]:checked').attr('title'));
     total = (amount * dias);
+    if (isNaN(total)) {
+        total = 0;
+    }
     return total;
 }
 function getDias(ini, fin) {

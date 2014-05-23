@@ -8,7 +8,7 @@ class ClienteController extends \BaseController {
         'apellidoM' => 'Required',
         'ci' => 'Required',
         'telefono' => 'numeric',
-        'email' => 'email'
+        'email' => 'unique:cliente|email'
     );
     private $message = array(
         'required' => 'Campo Obligatorio',
@@ -87,6 +87,34 @@ class ClienteController extends \BaseController {
         $ObjCliente = Cliente::find($id);
         $ObjCliente->delete();
         return Redirect::to('administracion/cliente');
+    }
+
+    public function nuevoCliente() {
+        return View::make('Cliente.new');
+    }
+
+    public function guardarCliente() {
+        $ObjCliente = new Cliente;
+        $input = Input::all();
+        $ObjCliente->nombre = $input['nombre'];
+        $ObjCliente->apellidoP = $input['apellidoP'];
+        $ObjCliente->apellidoM = $input['apellidoM'];
+        $ObjCliente->telefono = $input['telefono'];
+        $ObjCliente->direccion = $input['direccion'];
+        $ObjCliente->ci = $input['ci'];
+        $ObjCliente->email = $input['email'];
+        $ObjCliente->activo = 1;
+        $validation = Validator::make($input, $this->rules, $this->message);
+        if (!$validation->fails()) {
+            $ObjCliente->save();
+            echo 'ok';
+        } else {
+            return View::make('Cliente.new')->withErrors($validation);
+        }
+    }
+    public function autocompletarCliente() {
+        return Cliente::all()->toJson();
+        
     }
 
 }

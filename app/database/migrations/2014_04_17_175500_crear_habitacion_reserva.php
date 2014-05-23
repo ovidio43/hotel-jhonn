@@ -13,6 +13,7 @@ class CrearHabitacionReserva extends Migration {
     public function up() {
         Schema::create('habitacion_reserva', function(Blueprint $table) {
             $table->increments('id');
+            $table->integer('id_reserva');
             $table->integer('id_reserva')->unsigned();
             $table->foreign('id_reserva')->references('id')->on('reserva')->onDelete('cascade');
             $table->integer('id_habitacion')->unsigned();
