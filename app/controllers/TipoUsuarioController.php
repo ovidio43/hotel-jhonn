@@ -5,10 +5,7 @@ class TipoUsuarioController extends \BaseController {
     private $rules = array(
         'nombre' => 'Required'
     );
-    private $message = array(
-        'required' => 'Campo Obligatorio',
-    );
-
+ 
     public function __construct() {
         $this->beforeFilter(function() {
             if (!Auth::check()) {
@@ -27,19 +24,18 @@ class TipoUsuarioController extends \BaseController {
     }
 
     public function store() {
-        $ObjTipoUsuario = new TipoUsuario();
         $input = Input::all();
-        $ObjTipoUsuario->nombre = $input['nombre'];
-        $ObjTipoUsuario->descripcion = $input['descripcion'];
-        $validation = Validator::make($input, $this->rules, $this->message);
+        $validation = Validator::make($input, $this->rules);
         if (!$validation->fails()) {
+            $ObjTipoUsuario = new TipoUsuario();
+            $ObjTipoUsuario->nombre = $input['nombre'];
+            $ObjTipoUsuario->descripcion = $input['descripcion'];
             $ObjTipoUsuario->save();
-            return Redirect::to('sistema/tipo-usuario')->with('TipoUsuario', Input::all());            
+            return Redirect::to('sistema/tipo-usuario');
         } else {
-            return Redirect::back()->withErrors($validation);
+            return Redirect::back()->withErrors($validation)->withInput();
         }
     }
-
 
     public function edit($id) {
         $ObjTipoUsuario = TipoUsuario::find($id);
@@ -48,15 +44,16 @@ class TipoUsuarioController extends \BaseController {
 
     public function update($id) {
         $input = Input::all();
-        $ObjTipoUsuario = TipoUsuario::find($id);
-        $ObjTipoUsuario->nombre = $input['nombre'];
-        $ObjTipoUsuario->descripcion = $input['descripcion'];
+
         $validation = Validator::make($input, $this->rules, $this->message);
         if (!$validation->fails()) {
+            $ObjTipoUsuario = TipoUsuario::find($id);
+            $ObjTipoUsuario->nombre = $input['nombre'];
+            $ObjTipoUsuario->descripcion = $input['descripcion'];
             $ObjTipoUsuario->save();
-            return Redirect::to('sistema/tipo-usuario')->with('TipoUsuario', $input);
+            return Redirect::to('sistema/tipo-usuario');
         } else {
-            return Redirect::back()->withErrors($validation);
+            return Redirect::back()->withErrors($validation)->withInput();
         }
     }
 

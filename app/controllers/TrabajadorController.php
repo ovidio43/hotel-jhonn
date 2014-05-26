@@ -10,11 +10,6 @@ class TrabajadorController extends \BaseController {
         'telefono' => 'numeric',
         'email' => 'email'
     );
-    private $message = array(
-        'required' => 'Campo Obligatorio',
-        'numeric' => 'Solo Números',
-        'email' => 'Email Invalido, (Ej: myemail@dominio.com)'
-    );
 
     public function __construct() {
         $this->beforeFilter(function() {
@@ -25,7 +20,7 @@ class TrabajadorController extends \BaseController {
     }
 
     public function index() {
-        $ObjTrabajador = Trabajador::where('id','!=','1')->orderBy('nombre','asc')->get();
+        $ObjTrabajador = Trabajador::where('id', '!=', '1')->orderBy('nombre', 'asc')->get();
         return View::make('Trabajador.index')->with('Trabajador', $ObjTrabajador);
     }
 
@@ -34,22 +29,22 @@ class TrabajadorController extends \BaseController {
     }
 
     public function store() {
-        $ObjTrabajador = new Trabajador;
         $input = Input::all();
-        $ObjTrabajador->nombre = $input['nombre'];
-        $ObjTrabajador->apellidoP = $input['apellidoP'];
-        $ObjTrabajador->apellidoM = $input['apellidoM'];
-        $ObjTrabajador->telefono = $input['telefono'];
-        $ObjTrabajador->direccion = $input['direccion'];
-        $ObjTrabajador->ci = $input['ci'];
-        $ObjTrabajador->email = $input['email'];
-        $ObjTrabajador->activo = 1;
-        $validation = Validator::make($input, $this->rules, $this->message);
+        $validation = Validator::make($input, $this->rules);
         if (!$validation->fails()) {
+            $ObjTrabajador = new Trabajador;
+            $ObjTrabajador->nombre = $input['nombre'];
+            $ObjTrabajador->apellidoP = $input['apellidoP'];
+            $ObjTrabajador->apellidoM = $input['apellidoM'];
+            $ObjTrabajador->telefono = $input['telefono'];
+            $ObjTrabajador->direccion = $input['direccion'];
+            $ObjTrabajador->ci = $input['ci'];
+            $ObjTrabajador->email = $input['email'];
+            $ObjTrabajador->activo = 1;
             $ObjTrabajador->save();
-            return Redirect::to('administracion/trabajador')->with('Trabajador', Input::all());
+            return Redirect::to('administracion/trabajador');
         } else {
-            return Redirect::back()->withErrors($validation);
+            return Redirect::back()->withErrors($validation)->withInput();
         }
     }
 
@@ -65,21 +60,21 @@ class TrabajadorController extends \BaseController {
 
     public function update($id) {
         $input = Input::all();
-        $ObjTrabajador = Trabajador::find($id);
-        $ObjTrabajador->nombre = $input['nombre'];
-        $ObjTrabajador->apellidoP = $input['apellidoP'];
-        $ObjTrabajador->apellidoM = $input['apellidoM'];
-        $ObjTrabajador->telefono = $input['telefono'];
-        $ObjTrabajador->direccion = $input['direccion'];
-        $ObjTrabajador->ci = $input['ci'];
-        $ObjTrabajador->email = $input['email'];
-        $ObjTrabajador->activo = 1;
-        $validation = Validator::make($input, $this->rules, $this->message);
+        $validation = Validator::make($input, $this->rules);
         if (!$validation->fails()) {
+            $ObjTrabajador = Trabajador::find($id);
+            $ObjTrabajador->nombre = $input['nombre'];
+            $ObjTrabajador->apellidoP = $input['apellidoP'];
+            $ObjTrabajador->apellidoM = $input['apellidoM'];
+            $ObjTrabajador->telefono = $input['telefono'];
+            $ObjTrabajador->direccion = $input['direccion'];
+            $ObjTrabajador->ci = $input['ci'];
+            $ObjTrabajador->email = $input['email'];
+            $ObjTrabajador->activo = 1;
             $ObjTrabajador->save();
-            return Redirect::to('administracion/trabajador')->with('Trabajador', $input);
+            return Redirect::to('administracion/trabajador');
         } else {
-            return Redirect::back()->withErrors($validation);
+            return Redirect::back()->withErrors($validation)->withInput();
         }
     }
 

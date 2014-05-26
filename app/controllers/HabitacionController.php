@@ -6,11 +6,6 @@ class HabitacionController extends \BaseController {
         'nro' => 'required|numeric|unique:habitacion',
         'id_tipo_habitacion' => 'required'
     );
-    private $message = array(
-        'numeric' => 'Solo Números',
-        'required' => 'Campo Obligatorio.',
-        'unique' => 'El Nro. de Habitación ya existe.'
-    );
 
     public function __construct() {
         $this->beforeFilter(function() {
@@ -21,7 +16,7 @@ class HabitacionController extends \BaseController {
     }
 
     public function index() {
-        $ObjHabitacion = Habitacion::orderby('nro','asc')->get();
+        $ObjHabitacion = Habitacion::orderby('nro', 'asc')->get();
         return View::make('Habitacion.index')->with('Habitacion', $ObjHabitacion);
     }
 
@@ -30,18 +25,18 @@ class HabitacionController extends \BaseController {
     }
 
     public function store() {
-        $ObjHabitacion = new Habitacion;
         $input = Input::all();
-        $ObjHabitacion->nro = $input['nro'];
-        $ObjHabitacion->estado = 'LIBRE';
-        $ObjHabitacion->id_tipo_habitacion = $input['id_tipo_habitacion'];
-        $ObjHabitacion->activo = 1;
-        $validation = Validator::make($input, $this->rules, $this->message);
+        $validation = Validator::make($input, $this->rules);
         if (!$validation->fails()) {
+            $ObjHabitacion = new Habitacion;
+            $ObjHabitacion->nro = $input['nro'];
+            $ObjHabitacion->estado = 'LIBRE';
+            $ObjHabitacion->id_tipo_habitacion = $input['id_tipo_habitacion'];
+            $ObjHabitacion->activo = 1;
             $ObjHabitacion->save();
-            return Redirect::to('administracion/habitacion')->with('Habitacion', Input::all());
+            return Redirect::to('administracion/habitacion');
         } else {
-            return Redirect::back()->withErrors($validation);
+            return Redirect::back()->withErrors($validation)->withInput();
         }
     }
 
@@ -57,17 +52,17 @@ class HabitacionController extends \BaseController {
 
     public function update($id) {
         $input = Input::all();
-        $ObjHabitacion = Habitacion::find($id);
-        $ObjHabitacion->id_tipo_habitacion = $input['id_tipo_habitacion'];
         $this->rules = array(
             'id_tipo_habitacion' => 'required'
         );
-        $validation = Validator::make($input, $this->rules, $this->message);
+        $validation = Validator::make($input, $this->rules);
         if (!$validation->fails()) {
+            $ObjHabitacion = Habitacion::find($id);
+            $ObjHabitacion->id_tipo_habitacion = $input['id_tipo_habitacion'];
             $ObjHabitacion->save();
-            return Redirect::to('administracion/habitacion')->with('Habitacion', $input);
+            return Redirect::to('administracion/habitacion');
         } else {
-            return Redirect::back()->withErrors($validation);
+            return Redirect::back()->withErrors($validation)->withInput();
         }
     }
 

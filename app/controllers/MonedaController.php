@@ -29,18 +29,17 @@ class MonedaController extends \BaseController {
     }
 
     public function store() {
-        $ObjMoneda = new Moneda;
         $input = Input::all();
-        $ObjMoneda->nombre = $input['nombre'];
-        $ObjMoneda->pais = $input['pais'];
-        $ObjMoneda->simbolo = $input['simbolo'];
         $validation = Validator::make($input, $this->rules, $this->message);
         if (!$validation->fails()) {
+            $ObjMoneda = new Moneda;
+            $ObjMoneda->nombre = $input['nombre'];
+            $ObjMoneda->pais = $input['pais'];
+            $ObjMoneda->simbolo = $input['simbolo'];
             $ObjMoneda->save();
             return Redirect::to('sistema/parametros/moneda')->with('Moneda', Input::all());
         } else {
             return View::make('Parametros.Moneda.create')->withErrors($validation);
-//            return Redirect::back()->withErrors($validation);
         }
     }
 
@@ -51,12 +50,14 @@ class MonedaController extends \BaseController {
 
     public function update($id) {
         $input = Input::all();
-        $ObjMoneda = Moneda::find($id);
-        $ObjMoneda->nombre = $input['nombre'];
-        $ObjMoneda->pais = $input['pais'];
-        $ObjMoneda->simbolo = $input['simbolo'];
+
+
         $validation = Validator::make($input, $this->rules, $this->message);
         if (!$validation->fails()) {
+            $ObjMoneda = Moneda::find($id);
+            $ObjMoneda->nombre = $input['nombre'];
+            $ObjMoneda->pais = $input['pais'];
+            $ObjMoneda->simbolo = $input['simbolo'];
             $ObjMoneda->save();
             return Redirect::to('sistema/parametros/moneda')->with('Moneda', $input);
         } else {
@@ -68,12 +69,12 @@ class MonedaController extends \BaseController {
     public function destroy($id) {
         $ObjMoneda = Moneda::find($id);
         $ObjMoneda->delete();
-
         return Redirect::to('sistema/parametros/moneda');
     }
-    
+
     public function getList($numPrices) {
         $ObjMoneda = Moneda::orderBy('nombre', 'asc')->get();
-        return View::make('Parametros.Moneda.prices')->with('Moneda', $ObjMoneda)->with('numPrices',$numPrices);
+        return View::make('Parametros.Moneda.prices')->with('Moneda', $ObjMoneda)->with('numPrices', $numPrices);
     }
+
 }

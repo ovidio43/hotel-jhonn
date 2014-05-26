@@ -8,11 +8,6 @@ class UsuarioController extends \BaseController {
         'id_trabajador' => 'required',
         'id_tipo_usuario' => 'required',
     );
-    private $message = array(
-        'required' => 'Campo Obligatorio.',
-        'min' => 'Acepta 6 carácteres o mas.',
-        'unique' => 'El usuario ya existe.'
-    );
 
     public function __construct() {
         $this->beforeFilter(function() {
@@ -23,7 +18,7 @@ class UsuarioController extends \BaseController {
     }
 
     public function index() {
-        $ObjUsuario = Usuario::where('id_tipo_usuario','!=','1')->get();
+        $ObjUsuario = Usuario::where('id_tipo_usuario', '!=', '1')->get();
         return View::make('Usuario.index')->with('Usuario', $ObjUsuario);
     }
 
@@ -32,20 +27,22 @@ class UsuarioController extends \BaseController {
     }
 
     public function store() {
-        $ObjUsuario = new Usuario;
+
         $input = Input::all();
-        $ObjUsuario->email = $input['email'];
-        $ObjUsuario->password = Hash::make($input['password']);
-        $ObjUsuario->fecha_creacion = date('Y-m-d');
-        $ObjUsuario->id_trabajador = $input['id_trabajador'];
-        $ObjUsuario->id_tipo_usuario = $input['id_tipo_usuario'];
-        $ObjUsuario->activo = 1;
-        $validation = Validator::make($input, $this->rules, $this->message);
+
+        $validation = Validator::make($input, $this->rules);
         if (!$validation->fails()) {
+            $ObjUsuario = new Usuario;
+            $ObjUsuario->email = $input['email'];
+            $ObjUsuario->password = Hash::make($input['password']);
+            $ObjUsuario->fecha_creacion = date('Y-m-d');
+            $ObjUsuario->id_trabajador = $input['id_trabajador'];
+            $ObjUsuario->id_tipo_usuario = $input['id_tipo_usuario'];
+            $ObjUsuario->activo = 1;
             $ObjUsuario->save();
-            return Redirect::to('sistema/usuario')->with('Usuario', Input::all());
+            return Redirect::to('sistema/usuario');
         } else {
-            return Redirect::back()->withErrors($validation);
+            return Redirect::back()->withErrors($validation)->withInput();
         }
     }
 
@@ -61,25 +58,23 @@ class UsuarioController extends \BaseController {
 
     public function update($id) {
         $input = Input::all();
-        $ObjUsuario = Usuario::find($id);
-        if (Input::has('password')) {
-            $ObjUsuario->password = Hash::make($input['password']);
-        }
-        $ObjUsuario->id_trabajador = $input['id_trabajador'];
-        $ObjUsuario->id_tipo_usuario = $input['id_tipo_usuario'];
-
         $curretRules = array(
             'password' => 'min:6',
             'id_trabajador' => 'required',
             'id_tipo_usuario' => 'required'
         );
         $validation = Validator::make($input, $curretRules, $this->message);
-
         if (!$validation->fails()) {
+            $ObjUsuario = Usuario::find($id);
+            if (Input::has('password')) {
+                $ObjUsuario->password = Hash::make($input['password']);
+            }
+            $ObjUsuario->id_trabajador = $input['id_trabajador'];
+            $ObjUsuario->id_tipo_usuario = $input['id_tipo_usuario'];
             $ObjUsuario->save();
-            return Redirect::to('sistema/usuario')->with('Usuario', $input);
+            return Redirect::to('sistema/usuario');
         } else {
-            return Redirect::back()->withErrors($validation);
+            return Redirect::back()->withErrors($validation)->withInput();
         }
     }
 

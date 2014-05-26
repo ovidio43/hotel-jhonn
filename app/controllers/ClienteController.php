@@ -10,11 +10,6 @@ class ClienteController extends \BaseController {
         'telefono' => 'numeric',
         'email' => 'unique:cliente|email'
     );
-    private $message = array(
-        'required' => 'Campo Obligatorio',
-        'numeric' => 'Solo Números',
-        'email' => 'Email Invalido, (Ej: myemail@dominio.com)'
-    );
 
     public function __construct() {
         $this->beforeFilter(function() {
@@ -34,22 +29,22 @@ class ClienteController extends \BaseController {
     }
 
     public function store() {
-        $ObjCliente = new Cliente;
         $input = Input::all();
-        $ObjCliente->nombre = $input['nombre'];
-        $ObjCliente->apellidoP = $input['apellidoP'];
-        $ObjCliente->apellidoM = $input['apellidoM'];
-        $ObjCliente->telefono = $input['telefono'];
-        $ObjCliente->direccion = $input['direccion'];
-        $ObjCliente->ci = $input['ci'];
-        $ObjCliente->email = $input['email'];
-        $ObjCliente->activo = 1;
-        $validation = Validator::make($input, $this->rules, $this->message);
+        $validation = Validator::make($input, $this->rules);
         if (!$validation->fails()) {
+            $ObjCliente = new Cliente;
+            $ObjCliente->nombre = $input['nombre'];
+            $ObjCliente->apellidoP = $input['apellidoP'];
+            $ObjCliente->apellidoM = $input['apellidoM'];
+            $ObjCliente->telefono = $input['telefono'];
+            $ObjCliente->direccion = $input['direccion'];
+            $ObjCliente->ci = $input['ci'];
+            $ObjCliente->email = $input['email'];
+            $ObjCliente->activo = 1;
             $ObjCliente->save();
-            return Redirect::to('administracion/cliente')->with('Cliente', Input::all());
+            return Redirect::to('administracion/cliente');
         } else {
-            return Redirect::back()->withErrors($validation);
+            return Redirect::back()->withErrors($validation)->withInput();
         }
     }
 
@@ -65,21 +60,21 @@ class ClienteController extends \BaseController {
 
     public function update($id) {
         $input = Input::all();
-        $ObjCliente = Cliente::find($id);
-        $ObjCliente->nombre = $input['nombre'];
-        $ObjCliente->apellidoP = $input['apellidoP'];
-        $ObjCliente->apellidoM = $input['apellidoM'];
-        $ObjCliente->telefono = $input['telefono'];
-        $ObjCliente->direccion = $input['direccion'];
-        $ObjCliente->ci = $input['ci'];
-        $ObjCliente->email = $input['email'];
-        $ObjCliente->activo = 1;
-        $validation = Validator::make($input, $this->rules, $this->message);
+        $validation = Validator::make($input, $this->rules);
         if (!$validation->fails()) {
+            $ObjCliente = Cliente::find($id);
+            $ObjCliente->nombre = $input['nombre'];
+            $ObjCliente->apellidoP = $input['apellidoP'];
+            $ObjCliente->apellidoM = $input['apellidoM'];
+            $ObjCliente->telefono = $input['telefono'];
+            $ObjCliente->direccion = $input['direccion'];
+            $ObjCliente->ci = $input['ci'];
+            $ObjCliente->email = $input['email'];
+            $ObjCliente->activo = 1;
             $ObjCliente->save();
-            return Redirect::to('administracion/cliente')->with('Cliente', $input);
+            return Redirect::to('administracion/cliente');
         } else {
-            return Redirect::back()->withErrors($validation);
+            return Redirect::back()->withErrors($validation)->withInput();
         }
     }
 
@@ -94,27 +89,27 @@ class ClienteController extends \BaseController {
     }
 
     public function guardarCliente() {
-        $ObjCliente = new Cliente;
         $input = Input::all();
-        $ObjCliente->nombre = $input['nombre'];
-        $ObjCliente->apellidoP = $input['apellidoP'];
-        $ObjCliente->apellidoM = $input['apellidoM'];
-        $ObjCliente->telefono = $input['telefono'];
-        $ObjCliente->direccion = $input['direccion'];
-        $ObjCliente->ci = $input['ci'];
-        $ObjCliente->email = $input['email'];
-        $ObjCliente->activo = 1;
-        $validation = Validator::make($input, $this->rules, $this->message);
+        $validation = Validator::make($input, $this->rules);
         if (!$validation->fails()) {
+            $ObjCliente = new Cliente;
+            $ObjCliente->nombre = $input['nombre'];
+            $ObjCliente->apellidoP = $input['apellidoP'];
+            $ObjCliente->apellidoM = $input['apellidoM'];
+            $ObjCliente->telefono = $input['telefono'];
+            $ObjCliente->direccion = $input['direccion'];
+            $ObjCliente->ci = $input['ci'];
+            $ObjCliente->email = $input['email'];
+            $ObjCliente->activo = 1;
             $ObjCliente->save();
             echo 'ok';
         } else {
             return View::make('Cliente.new')->withErrors($validation);
         }
     }
+
     public function autocompletarCliente() {
         return Cliente::all()->toJson();
-        
     }
 
 }

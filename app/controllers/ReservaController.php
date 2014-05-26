@@ -10,10 +10,10 @@ class ReservaController extends \BaseController {
         'id_habitacion' => 'Required',
         'id_precio' => 'Required'
     );
-    private $message = array(
-        'required' => 'Campo Obligatorio',
-        'numeric' => 'Solo Números'
-    );
+//    private $message = array(
+//        'required' => 'Campo Obligatorio',
+//        'numeric' => 'Solo Números'
+//    );
     private $concepto = array(
         'pendiente' => 'Queda Saldo pendiente de Cobro',
         'cancelado' => 'Sin cobros pendientes'
@@ -46,7 +46,7 @@ class ReservaController extends \BaseController {
 
     public function saveReservation() {
         $input = Input::all();
-        $validation = Validator::make($input, $this->rules, $this->message);
+        $validation = Validator::make($input, $this->rules);
         if (!$validation->fails()) {
             DB::transaction(function() use ($input) {
                 $id_reserva = $this->saveRserva($input);
@@ -59,7 +59,7 @@ class ReservaController extends \BaseController {
             return View::make('Reserva.index');
         } else {
             $ObjHabitacion = Habitacion::find($input['id_habitacion']);
-            return Redirect::to('reservaciones/' . $input['id_habitacion'])->with('Habitacion', $ObjHabitacion)->withErrors($validation);
+            return Redirect::to('reservaciones/' . $input['id_habitacion'])->with('Habitacion', $ObjHabitacion)->withErrors($validation)->withInput();
 //            return View::make('Reserva.detail')->with('Habitacion', $ObjHabitacion)->withErrors($validation);
         }
     }

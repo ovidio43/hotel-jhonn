@@ -6,9 +6,6 @@ class TipoHabitacionController extends \BaseController {
         'nombre' => 'required',
         'descripcion' => 'required'
     );
-    private $message = array(
-        'required' => 'Campo Obligatorio.'
-    );
 
     public function __construct() {
         $this->beforeFilter(function() {
@@ -28,25 +25,24 @@ class TipoHabitacionController extends \BaseController {
     }
 
     public function store() {
-        $ObjTipoHabitacion = new TipoHabitacion;
         $input = Input::all();
-        $ObjTipoHabitacion->nombre = $input['nombre'];
-        $ObjTipoHabitacion->descripcion = $input['descripcion'];
-        $validation = Validator::make($input, $this->rules, $this->message);
-
+        $validation = Validator::make($input, $this->rules);
         if (!$validation->fails()) {
+            $ObjTipoHabitacion = new TipoHabitacion;
+            $ObjTipoHabitacion->nombre = $input['nombre'];
+            $ObjTipoHabitacion->descripcion = $input['descripcion'];
             $ObjTipoHabitacion->save();
             for ($i = 1; $i <= $input['prices']; $i++) {
                 $objPrecio = new Precio;
                 $objPrecio->monto = $input['monto' . $i];
-                 $objPrecio->personas = $input['personas' . $i];
+                $objPrecio->personas = $input['personas' . $i];
                 $objPrecio->id_moneda = $input['id_moneda' . $i];
                 $objPrecio->id_tipo_habitacion = $ObjTipoHabitacion->id;
                 $objPrecio->save();
             }
-            return Redirect::to('administracion/tipo-habitacion')->with('TipoHabitacion', Input::all());
+            return Redirect::to('administracion/tipo-habitacion');
         } else {
-            return Redirect::back()->withErrors($validation);
+            return Redirect::back()->withErrors($validation)->withInput();
         }
     }
 
@@ -57,11 +53,11 @@ class TipoHabitacionController extends \BaseController {
 
     public function update($id) {
         $input = Input::all();
-        $ObjTipoHabitacion = TipoHabitacion::find($id);
-        $ObjTipoHabitacion->nombre = $input['nombre'];
-        $ObjTipoHabitacion->descripcion = $input['descripcion'];
-        $validation = Validator::make($input, $this->rules, $this->message);
+        $validation = Validator::make($input, $this->rules);
         if (!$validation->fails()) {
+            $ObjTipoHabitacion = TipoHabitacion::find($id);
+            $ObjTipoHabitacion->nombre = $input['nombre'];
+            $ObjTipoHabitacion->descripcion = $input['descripcion'];
             $ObjTipoHabitacion->save();
             for ($i = 1; $i <= $input['prices']; $i++) {
                 if (isset($input['id_precio' . $i])) {
@@ -75,9 +71,9 @@ class TipoHabitacionController extends \BaseController {
                 $objPrecio->id_tipo_habitacion = $ObjTipoHabitacion->id;
                 $objPrecio->save();
             }
-            return Redirect::to('administracion/tipo-habitacion')->with('TipoHabitacion', $input);
+            return Redirect::to('administracion/tipo-habitacion');
         } else {
-            return Redirect::back()->withErrors($validation);
+            return Redirect::back()->withErrors($validation)->withInput();
         }
     }
 
