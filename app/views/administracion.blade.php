@@ -13,6 +13,9 @@
         <li <?php echo (Request::is('administracion/tipo-habitacion/*') || Request::is('administracion/tipo-habitacion')) ? 'class="active"' : ''; ?>>
             <a href="{{URL::to('administracion/tipo-habitacion')}}"><span class="glyphicon glyphicon-bell"></span> Tipo Habitación</a>
         </li>
+        <li <?php echo (Request::is('administracion/reportes/*') || Request::is('administracion/reportes')) ? 'class="active"' : ''; ?>>
+            <a href="{{URL::to('administracion/reporte')}}"><span class=" glyphicon glyphicon-stats"></span> Reportes</a>
+        </li>
     </ul>
 </div>
 @include('content')

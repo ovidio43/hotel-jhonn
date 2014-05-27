@@ -48,6 +48,15 @@ Route::get('administracion/moneda/{numPrices}', 'MonedaController@getList');
 Route::get('administracion/tipo-habitacion/delete/price/{idprecio}', 'PrecioController@deletePrecio');
 /* * **************************************************************** */
 
+
+Route::get('administracion/reporte',function(){
+    return View::make('Reporte.main');
+});
+Route::post('administracion/reporte/reservas',function(){
+    
+    return View::make('Reporte.reporte')->with('Input',Input::all());
+});
+
 Route::resource('/', 'LoginController');
 Route::resource('login', 'LoginController');
 

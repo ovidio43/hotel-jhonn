@@ -70,4 +70,8 @@ require $framework.'/Illuminate/Foundation/start.php';
 |
 */
 
+
+/************************************************/
+require __DIR__ . '/../MPDF57/mpdf.php';
+
 return $app;

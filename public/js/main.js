@@ -1,4 +1,5 @@
 $(document).ready(function() {
+    $('.default-date').Zebra_DatePicker();
     $('#date-start').Zebra_DatePicker({
         direction: true,
         pair: $('#date-end'),
@@ -195,7 +196,7 @@ $(document).ready(function() {
             $('.custom-loading').hide();
         });
     });
-  
+
 });
 
 function sendRequest(url, method, data) {
