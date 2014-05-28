@@ -1,7 +1,7 @@
 @include('header')
 <h1> 
     <?php
-    echo Route::currentRouteName();
+//    echo Route::currentRouteName();
     echo '<br>';
     if (Auth::user()) {
         $objUsuario = Usuario::find(Auth::user()->id);

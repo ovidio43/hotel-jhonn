@@ -40,12 +40,21 @@
 
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav navbar-left">
-                        <li <?php echo (Request::is('sistema/*') || Request::is('sistema')) ? 'class="active"' : ''; ?>>
-                            <a href="{{URL::to('sistema')}}"><span class="glyphicon glyphicon-cog"></span> Sistema</a>
-                        </li>  
-                        <li  <?php echo (Request::is('administracion/*') || Request::is('administracion')) == true ? 'class="active"' : ''; ?>>
-                            <a href="{{URL::to('administracion')}}"><span class="glyphicon glyphicon-hdd"></span> Administración</a>
-                        </li>  
+                        <?php
+                        $currentUser = Auth::user();
+                        $usuario = Usuario::find($currentUser->id);
+                        if ($usuario->tipoUsuario->nombre === 'Super Administrador') {
+                            ?>
+                            <li <?php echo (Request::is('sistema/*') || Request::is('sistema')) ? 'class="active"' : ''; ?>>
+                                <a href="{{URL::to('sistema')}}"><span class="glyphicon glyphicon-cog"></span> Sistema</a>
+                            </li>  
+
+                            <li  <?php echo (Request::is('administracion/*') || Request::is('administracion')) == true ? 'class="active"' : ''; ?>>
+                                <a href="{{URL::to('administracion')}}"><span class="glyphicon glyphicon-hdd"></span> Administración</a>
+                            </li>  
+                            <?php
+                        }
+                        ?>
                         <li  <?php echo (Request::is('reservaciones/*') || Request::is('reservaciones')) == true ? 'class="active"' : ''; ?>>
                             <a href="{{URL::to('reservaciones')}}"><span class="glyphicon glyphicon-asterisk "></span> Reservaciones</a>
                         </li>                          
@@ -55,7 +64,7 @@
                     <a href="#" id="link-closeSession" title="Cerrar Sesion">
                         <span class="glyphicon glyphicon-user"></span> 
                         <?php
-                        echo Auth::user()->trabajador->nombre . ' ' . Auth::user()->trabajador->apellidoP . ' ' . Auth::user()->trabajador->apellidoM;
+                        echo $currentUser->trabajador->nombre . ' ' . $currentUser->trabajador->apellidoP . ' ' . $currentUser->trabajador->apellidoM;
                         ?>
                         <span class="glyphicon glyphicon-log-out"></span>
                     </a>                   

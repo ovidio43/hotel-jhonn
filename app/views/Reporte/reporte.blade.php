@@ -35,8 +35,12 @@ function getContent($Input) {
         </thead>
         <tbody>
             <?php
-//            $Reserva = Reserva::where('activo', '=', '1')->whereBetween('fecha', array($Input['desde'], $Input['hasta']))->get();
-            $Reserva = Reserva::whereBetween('fecha', array($Input['desde'], $Input['hasta']))->get();
+            if ($Input['estado_pago'] === 'TODOS') {
+                $Reserva = Reserva::whereBetween('fecha', array($Input['desde'] . ' 00:00:00', $Input['hasta'] . ' 23:59:59'))->get();
+            } else {
+                $Reserva = Reserva::where('estado_pago', '=', $Input['estado_pago'])->whereBetween('fecha', array($Input['desde'] . ' 00:00:00', $Input['hasta'] . ' 23:59:59'))->get();
+            }
+
             foreach ($Reserva as $rowR) {
                 $Habitacion = Habitacion::find($rowR->habitacionReserva->id_habitacion);
                 $ObjPrecio = Precio::find($rowR->habitacionReserva->id_precio);

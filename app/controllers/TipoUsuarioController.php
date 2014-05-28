@@ -44,8 +44,7 @@ class TipoUsuarioController extends \BaseController {
 
     public function update($id) {
         $input = Input::all();
-
-        $validation = Validator::make($input, $this->rules, $this->message);
+        $validation = Validator::make($input, $this->rules);
         if (!$validation->fails()) {
             $ObjTipoUsuario = TipoUsuario::find($id);
             $ObjTipoUsuario->nombre = $input['nombre'];

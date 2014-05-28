@@ -1,6 +1,6 @@
 @extends('reservaciones')
 @section('title')
-NUEVA RESERVA
+HABITACIONES DISPONIBLES
 @stop
 @section('content')
 <div class="list-group ">    
