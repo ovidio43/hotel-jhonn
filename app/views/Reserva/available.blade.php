@@ -6,7 +6,7 @@ HABITACIONES DISPONIBLES
 <div class="list-group ">    
     <?php
     $c = 1;
-    $objhab = Habitacion::where('estado', '=', 'LIBRE')->get();
+    $objhab = Habitacion::where('estado', '=', 'LIBRE')->orderby('id_tipo_habitacion', 'asc')->get();
     foreach ($objhab as $row) {
         $idHab = $row->id;
         $nroHab = $row->nro;

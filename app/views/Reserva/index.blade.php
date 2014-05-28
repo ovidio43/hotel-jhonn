@@ -8,6 +8,7 @@ LISTADO DE RESERVAS
         <thead>            
             <tr>
                 <th>Habitación</th>                
+                <th>Tipo</th>                
                 <th>Cliente</th>                
                 <th>Ingreso</th>                
                 <th>Salida</th>                
@@ -32,6 +33,7 @@ LISTADO DE RESERVAS
                 ?>
                 <tr id="<?php echo $rowR->id; ?>">
                     <td><?php echo '# ' . $Habitacion->nro; ?></td>
+                    <td><?php echo $Habitacion->tipoHabitacion->nombre; ?></td>
                     <td><?php echo $objCliente->nombre . ' ' . $objCliente->apellidoP . ' ' . $objCliente->apellidoM; ?></td>
                     <td><?php echo $rowR->fecha_entrada; ?></td>
                     <td><?php echo $rowR->fecha_salida; ?></td>

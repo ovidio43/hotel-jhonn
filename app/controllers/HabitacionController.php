@@ -16,7 +16,7 @@ class HabitacionController extends \BaseController {
     }
 
     public function index() {
-        $ObjHabitacion = Habitacion::orderby('nro', 'asc')->get();
+        $ObjHabitacion = Habitacion::orderby('id_tipo_habitacion', 'asc')->get();
         return View::make('Habitacion.index')->with('Habitacion', $ObjHabitacion);
     }
 
