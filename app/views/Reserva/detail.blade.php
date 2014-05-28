@@ -68,22 +68,11 @@ NUEVA RESERVA
                 <div class="col-sm-3">
                     {{Form::label('id_cliente', 'Cliente')}} 
                     <a href="{{URL::to('cliente/nuevo')}}" id="nuevo-cliente"><span class="glyphicon glyphicon-plus"></span></a>
-                    <select name="id_cliente" id="id_cliente" class="form-control" >
-                        <option value="">...........</option>
-                        @foreach(Cliente::all() as $row)
-                        <option value="{{$row->id}}">{{$row->nombre.' '.$row->apellidoP.' '.$row->apellidoM}}</option>
-                        @endforeach            
-                    </select>        
-                   
                     <!---custom autocompletar   -->
-<!--                    <input type="text" value="" name="id_cliente" id="id_cliente" >
-                    <div class="list-group">
-                        <a href="#" class="list-group-item">jkshdfljadh</a>                        
-                        <a href="#" class="list-group-item">jkshdfljadh</a>                        
-                        <a href="#" class="list-group-item">jkshdfljadh</a>                                                                      
-                    </div>-->
-                    <!---------------------------------->
+                    <input type="text" name="cliente" id="cliente" rel="{{URL::to('reservaciones/cliente/autocompletar')}}" class="form-control ui-autocomplete-input" autocomplete="off">                                    
+                    <input type="hidden" value="" name="id_cliente" id="id_cliente" >
                     <span class="error">{{ $errors->first('id_cliente')}}</span>
+                    <!---------------------------------->
                     <div >
                         {{Form::label('descripcion', 'Descripción de Reserva')}}
                         {{ Form::textArea('descripcion','',['class'=>'form-control'])}}
@@ -113,6 +102,69 @@ NUEVA RESERVA
     </div>
 </div>
 <div id="loginModal" class="modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+                <h4 class="text-center">Nuevo Cliente</h4>
+            </div>
+            <div class="modal-body">
+                {{ Form::open(array('url' => 'cliente/guardar','class'=>'form-horizontal','id'=>'new-client')) }}
+                <div class="form-group">
+                    {{Form::label('nombre', 'Nombre',['class'=>'col-sm-3 control-label'])}}
+                    <div class="col-sm-4">
+                        {{ Form::text('nombre','',['class'=>'form-control'])}}
+                        <span class="error">{{ $errors->first('nombre')}}</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    {{Form::label('apellidoP', 'Ap. Paterno',['class'=>'col-sm-3 control-label'])}}
+                    <div class="col-sm-4">
+                        {{ Form::text('apellidoP','',['class'=>'form-control'])}}
+                        <span class="error">{{ $errors->first('apellidoP')}}</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    {{Form::label('apellidoM', 'Ap. Materno',['class'=>'col-sm-3 control-label'])}}
+                    <div class="col-sm-4">
+                        {{ Form::text('apellidoM','',['class'=>'form-control'])}}
+                        <span class="error">{{ $errors->first('apellidoM')}}</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    {{Form::label('ci', 'CI',['class'=>'col-sm-3 control-label'])}}
+                    <div class="col-sm-4">
+                        {{ Form::text('ci','',['class'=>'form-control'])}}
+                        <span class="error">{{ $errors->first('ci')}}</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    {{Form::label('telefono', 'Teléfono',['class'=>'col-sm-3 control-label'])}}
+                    <div class="col-sm-4">
+                        {{ Form::text('telefono','',['class'=>'form-control'])}}
+                        <span class="error">{{ $errors->first('telefono')}}</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    {{Form::label('direccion', 'Dirección',['class'=>'col-sm-3 control-label'])}}
+                    <div class="col-sm-4">
+                        {{ Form::text('direccion','',['class'=>'form-control'])}}
+                    </div>
+                </div>
+                <div class="form-group">
+                    {{Form::label('email', 'Email',['class'=>'col-sm-3 control-label'])}}
+                    <div class="col-sm-4">
+                        {{ Form::text('email','',['class'=>'form-control'])}}
+                        <span class="error">{{ $errors->first('email')}}</span>
+                    </div>
+                </div>
+                {{ Form::close() }}
+                <div class="row">
+                    <a href="{{URL::to('cliente/guardar')}}" id="guardar-cliente" role="button" class="btn btn-default" >Guardar</a>
+                </div>
+            </div>    
 
+        </div>
+    </div>
 </div>
 @stop

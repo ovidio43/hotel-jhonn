@@ -104,12 +104,20 @@ class ClienteController extends \BaseController {
             $ObjCliente->save();
             echo 'ok';
         } else {
-            return View::make('Cliente.new')->withErrors($validation);
+            return View::make('Cliente.new')->withErrors($validation)->withInput();
         }
     }
 
     public function autocompletarCliente() {
-        return Cliente::all()->toJson();
+        $input = Input::all();
+        $comodin = '%' . $input['term'] . '%';
+        $cliente = Cliente::where('nombre', 'like', $comodin)->take(10)->get();
+        $result = [];
+        foreach ($cliente as $row) {
+            $nombreCompleto = $row->nombre . ' ' . $row->apellidoP . ' ' . $row->apellidoM;
+            array_push($result, ["id" => $row->id, "label" => $nombreCompleto, "value" => strip_tags($nombreCompleto)]);
+        }
+        return json_encode($result);
     }
 
 }

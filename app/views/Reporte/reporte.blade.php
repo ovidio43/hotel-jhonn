@@ -4,31 +4,14 @@ echo HTML::style('css/layout.css');
 getHeader($Input);
 getContent($Input);
 
-function getDateFormting($date) {
-    $Ymd = explode('-', $date);
-    $meses = [
-        '01' => 'Enero', '02' => 'Febrero', '03' => 'Marzo', '04' => 'Abril', '05' => 'Mayo', '06' => 'Junio', '07' => 'Julio',
-        '08' => 'Agosto', '09' => 'Septiembre', '10' => 'Octubre', '11' => 'Noviembre', '12' => 'Diciembre'
-    ];
-    return $Ymd[2] . ' ' . $meses[$Ymd[1]] . ' de ' . $Ymd[0];
-}
-
 function getHeader($Input) {
     ?>
     <table class="reporte">
         <thead>
-            <tr>
-                <th><h4>Reporte Reservas</h4></th>          
-    </tr>
-    <tr>
-        <th>Desde <?php echo getDateFormting($Input['desde']); ?> hasta <?php echo getDateFormting($Input['hasta']); ?></th>                          
-    </tr>
-    <tr>
-        <th>Expresado en (<?php echo 'Bs.-' ?>)</th>                          
-    </tr>
+            <tr><th><h4>Reporte Reservas</h4></th></tr>
+    <tr><th>Desde <?php echo getDateFormting($Input['desde']); ?> Hasta <?php echo getDateFormting($Input['hasta']); ?></th></tr>
     </thead>        
     </table>
-
     <?php
 }
 
@@ -37,26 +20,55 @@ function getContent($Input) {
     <table class="reporte" border="1" cellspacing="0" cellpadding="0">
         <thead>
             <tr>
+                <th>#</th>
+                <th>Habitación</th>
                 <th>Cliente</th>
                 <th>Ingreso</th>
                 <th>Salida</th>
+                <th>Precio</th>
+                <th>Empleado</th>
                 <th>Estado</th>
-                <th>Monto</th>
+                <th>Monto Pagado</th>
                 <th>Total</th>
+                <th>Moneda</th>                
             </tr>
         </thead>
         <tbody>
             <?php
-            $Reserva = Reserva::where('activo', '=', '1')->whereBetween('fecha_entrada', array($Input['desde'], $Input['hasta']))->get();
+//            $Reserva = Reserva::where('activo', '=', '1')->whereBetween('fecha', array($Input['desde'], $Input['hasta']))->get();
+            $Reserva = Reserva::whereBetween('fecha', array($Input['desde'], $Input['hasta']))->get();
             foreach ($Reserva as $rowR) {
+                $Habitacion = Habitacion::find($rowR->habitacionReserva->id_habitacion);
+                $ObjPrecio = Precio::find($rowR->habitacionReserva->id_precio);
+                $objMoneda = Moneda::find($ObjPrecio->id_moneda);
+                $objCliente = Cliente::find($rowR->id_cliente);
+                $objTrabajador = Trabajador::find($rowR->id_trabajador);
                 ?>
                 <tr>
-                    <td></td>
-                    <td>{{ $rowR->fecha_entrada}}</td>                    
-                    <td>{{ $rowR->fecha_salida}}</td>                    
-                    <td>{{ $rowR->estado_pago}}</td>                    
-                    <td>0</td>
-                    <td>{{ $rowR->total}}</td>                    
+                    <td><?php echo $rowR->id; ?></td>
+                    <td><?php echo $Habitacion->nro; ?></td>
+                    <td><?php echo $objCliente->nombre . ' ' . $objCliente->apellidoP . ' ' . $objCliente->apellidoM; ?></td>
+                    <td><?php echo $rowR->fecha_entrada; ?></td>
+                    <td><?php echo $rowR->fecha_salida; ?></td>
+                    <td><?php echo $ObjPrecio->monto; ?></td>
+                    <td><?php echo $objTrabajador->nombre . ' ' . $objTrabajador->apellidoP . ' ' . $objTrabajador->apellidoM; ?></td>
+                    <td><?php echo $rowR->estado_pago; ?></td>
+                    <td>
+                        <?php
+                        $monto = 0;
+                        if (count($rowR->pago) > 0) {
+                            foreach ($rowR->pago as $rowP) {
+                                $monto+=$rowP->monto;
+                                echo $rowP->monto . '<br>';
+                            }
+                        } else {
+                            echo $monto;
+                        }
+                        ?>
+
+                    </td>
+                    <td><?php echo $rowR->total; ?></td>
+                    <td><?php echo $objMoneda->simbolo; ?></td>
                 </tr>
                 <?php
             }
@@ -64,6 +76,15 @@ function getContent($Input) {
         </tbody>
     </table>
     <?php
+}
+
+function getDateFormting($date) {
+    $Ymd = explode('-', $date);
+    $meses = [
+        '01' => 'Enero', '02' => 'Febrero', '03' => 'Marzo', '04' => 'Abril', '05' => 'Mayo', '06' => 'Junio', '07' => 'Julio',
+        '08' => 'Agosto', '09' => 'Septiembre', '10' => 'Octubre', '11' => 'Noviembre', '12' => 'Diciembre'
+    ];
+    return $Ymd[2] . ' de ' . $meses[$Ymd[1]] . ' ' . $Ymd[0];
 }
 
 $content = ob_get_clean();

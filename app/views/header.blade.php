@@ -8,8 +8,14 @@
         {{ HTML::style('css/bootstrap-3.1.1/css/bootstrap-theme.min.css') }}                
         {{ HTML::style('css/layout.css') }}                
         {{ HTML::style('js/Zebra_Datepicker-master/css/bootstrap.css') }}                
+        {{ HTML::style('js/jquery-ui-1.10.4/css/ui-lightness/jquery-ui-1.10.4.custom.min.css') }}                
         {{ HTML::script('js/jquery-2.0.2.min.js') }}
         {{ HTML::script('css/bootstrap-3.1.1/js/bootstrap.min.js') }}
+        {{ HTML::script('js/jquery-ui-1.10.4/development-bundle/ui/minified/jquery.ui.core.min.js') }}
+        {{ HTML::script('js/jquery-ui-1.10.4/development-bundle/ui/minified/jquery.ui.widget.min.js') }}
+        {{ HTML::script('js/jquery-ui-1.10.4/development-bundle/ui/minified/jquery.ui.position.min.js') }}
+        {{ HTML::script('js/jquery-ui-1.10.4/development-bundle/ui/minified/jquery.ui.menu.min.js') }}
+        {{ HTML::script('js/jquery-ui-1.10.4/development-bundle/ui/minified/jquery.ui.autocomplete.min.js') }}  
         {{ HTML::script('js/Zebra_Datepicker-master/javascript/zebra_datepicker.js') }}        
         {{ HTML::script('js/main.min.js') }}         
     </head>

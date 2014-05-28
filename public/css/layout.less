@@ -14,7 +14,7 @@ body{
         height: 35px;
         left: 50%;
         padding: 7px;
-        position: absolute;
+        position: fixed;
         z-index: 9999;
     }
     hr{
@@ -26,14 +26,19 @@ body{
         overflow-y: scroll;
     }
     .Zebra_DatePicker{
-        max-width: 222px;  
-        z-index: 9999;
+        max-width: 222px;       
     }
     .cb-hab{        
         vertical-align: top;
     }
     .error{
         color: red;
+    }
+    .navbar-fixed-top, .navbar-fixed-bottom{
+        z-index: 100;
+    }
+    .ui-autocomplete-loading {
+        background: white url('../js/jquery-ui-1.10.4/css/ui-lightness/images/ui-anim_basic_16x16.gif') right center no-repeat;
     }
     /******css reporte******/
     table.reporte{

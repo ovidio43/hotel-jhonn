@@ -22,7 +22,22 @@ $(document).ready(function() {
             $('#saldo').val(getSaldo(total, monto));
         }
     });
+    /**********autocompletar cliente**************************/
+    var clienteUrl = $("#cliente").attr('rel');
+    $('body').on('focusout', '#cliente', function(e) {
+        if ($(this).val() == '') {
+            $('#id_cliente').val('');
+        }
+    });
+    $("#cliente").autocomplete({
+        source: clienteUrl,
+        minLength: 2,
+        select: function(event, ui) {
+            $('#id_cliente').val(ui.item.id);
+        }
+    });
 
+    /************************************/
 
     $('.a-delete').on('click', function() {
         var status = confirm("Se Eliminará el Item Seleccionado!!!");
@@ -174,26 +189,20 @@ $(document).ready(function() {
 
     $('body').on('click', '#nuevo-cliente', function(e) {
         e.preventDefault();
-        var thisObj = $(this);
-        var url = thisObj.attr('href');
-        $('.custom-loading').show();
-        $.get(url, function(data) {
-            $('#loginModal').empty().append(data);
-            $('#loginModal').addClass('show');
-        }).complete(function() {
-            $('.custom-loading').hide();
-        });
+        $('#loginModal').addClass('show');
     });
     $('body').on('click', '#guardar-cliente', function(e) {
         e.preventDefault();
+        $('.custom-loading').addClass('show');
         $.post($(this).attr('href'), $("#new-client").serialize(), function(data) {
             if (data === 'ok') {
                 $('#loginModal').removeClass('show');
+                limpiarformulario($("#new-client"));
             } else {
                 $('#loginModal').empty().append(data);
             }
         }).complete(function() {
-            $('.custom-loading').hide();
+            $('.custom-loading').removeClass('show');
         });
     });
 
@@ -236,4 +245,28 @@ function getDias(ini, fin) {
     return ((new Date(fin) - new Date(ini)) / 24 / 3600000);
 }
 
+function limpiarformulario(formulario) {
+    /* Se encarga de leer todas las etiquetas input del formulario*/
+    jQuery(formulario).find('input').each(function() {
+        switch (this.type) {
+            case 'password':
+            case 'text':
+//            case 'hidden':
+            case 'file':
+                $(this).val('');
+                break;
+            case 'checkbox':
+            case 'radio':
+                this.checked = false;
+        }
+    });
 
+    /* Se encarga de leer todas las etiquetas select del formulario */
+    $(formulario).find('select').each(function() {
+        $("#" + this.id + " option[value=0]").attr("selected", true);
+    });
+    /* Se encarga de leer todas las etiquetas textarea del formulario */
+    $(formulario).find('textarea').each(function() {
+        $(this).val('');
+    });
+}

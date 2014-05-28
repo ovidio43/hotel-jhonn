@@ -56,7 +56,8 @@ class ReservaController extends \BaseController {
                     $this->savePago($input, $id_reserva);
                 }
             });
-            return View::make('Reserva.index');
+//            return View::make('Reserva.index');
+            return Redirect::to('reservaciones');
         } else {
             $ObjHabitacion = Habitacion::find($input['id_habitacion']);
             return Redirect::to('reservaciones/' . $input['id_habitacion'])->with('Habitacion', $ObjHabitacion)->withErrors($validation)->withInput();
