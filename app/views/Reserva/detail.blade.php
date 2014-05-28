@@ -6,7 +6,7 @@ NUEVA RESERVA
 <div class="modal-dialog" style="width: 100%;">
     <div class="modal-content">
         <div class="modal-header">
-            <button aria-hidden="true" data-dismiss="modal" class="detail-close close" type="button">×</button>
+            <button aria-hidden="true" data-dismiss="modal" class="detail-close close glyphicon glyphicon-remove" type="button"></button>
             <h5 class="text-center"><strong>Nueva Reservación</strong></h5>
         </div>
         <div class="modal-body">

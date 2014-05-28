@@ -48,14 +48,22 @@ Route::get('administracion/moneda/{numPrices}', 'MonedaController@getList');
 Route::get('administracion/tipo-habitacion/delete/price/{idprecio}', 'PrecioController@deletePrecio');
 /* * **************************************************************** */
 
-/************reportes********************/
-Route::get('administracion/reporte',function(){
-    return View::make('Reporte.main');
+/* * **********reportes******************* */
+Route::get('administracion/reporte', function() {
+    if (Auth::check()) {
+        return View::make('Reporte.main');
+    } else {
+        return Redirect::to('/');
+    }
 });
-Route::post('administracion/reporte/reservas',function(){    
-    return View::make('Reporte.reporte')->with('Input',Input::all());
+Route::post('administracion/reporte/reservas', function() {
+    if (Auth::check()) {
+        return View::make('Reporte.reporte')->with('Input', Input::all());
+    } else {
+        return Redirect::to('/');
+    }
 });
-/**************************************/
+/* * *********************************** */
 Route::resource('/', 'LoginController');
 Route::resource('login', 'LoginController');
 

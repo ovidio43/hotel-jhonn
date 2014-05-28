@@ -6,18 +6,18 @@ getContent($Input);
 
 function getHeader($Input) {
     ?>
-    <table class="reporte">
+    <table class="header-reporte">
         <thead>
             <tr><th><h4>Reporte Reservas</h4></th></tr>
     <tr><th>Desde <?php echo getDateFormting($Input['desde']); ?> Hasta <?php echo getDateFormting($Input['hasta']); ?></th></tr>
-    </thead>        
+    </thead>   
     </table>
     <?php
 }
 
 function getContent($Input) {
     ?>
-    <table class="reporte" border="1" cellspacing="0" cellpadding="0">
+    <table class="content-reporte" border="1" cellspacing="0" cellpadding="0">
         <thead>
             <tr>
                 <th>#</th>
@@ -25,9 +25,10 @@ function getContent($Input) {
                 <th>Cliente</th>
                 <th>Ingreso</th>
                 <th>Salida</th>
-                <th>Precio</th>
                 <th>Empleado</th>
                 <th>Estado</th>
+                <th>Precio</th>
+                <th>Días</th>
                 <th>Monto Pagado</th>
                 <th>Total</th>
                 <th>Moneda</th>                
@@ -53,10 +54,11 @@ function getContent($Input) {
                     <td><?php echo $Habitacion->nro; ?></td>
                     <td><?php echo $objCliente->nombre . ' ' . $objCliente->apellidoP . ' ' . $objCliente->apellidoM; ?></td>
                     <td><?php echo $rowR->fecha_entrada; ?></td>
-                    <td><?php echo $rowR->fecha_salida; ?></td>
-                    <td><?php echo $ObjPrecio->monto; ?></td>
+                    <td><?php echo $rowR->fecha_salida; ?></td>                  
                     <td><?php echo $objTrabajador->nombre . ' ' . $objTrabajador->apellidoP . ' ' . $objTrabajador->apellidoM; ?></td>
                     <td><?php echo $rowR->estado_pago; ?></td>
+                    <td><?php echo $ObjPrecio->monto; ?></td>
+                    <td><?php echo $rowR->dias; ?></td>
                     <td>
                         <?php
                         $monto = 0;
@@ -94,7 +96,7 @@ function getDateFormting($date) {
 $content = ob_get_clean();
 $mpdf = new mPDF('c', 'Letter', '', '', 10, 10, 25, 25, 16, 13);
 $mpdf->SetTitle('my title');
-$mpdf->SetHeader('{DATE j-m-Y}|{PAGENO}/{nb}|HOTEL');
+$mpdf->SetHeader('{DATE j-m-Y}|{PAGENO}/{nb}|Hotel Jhonn-Zen');
 $mpdf->SetFooter('{PAGENO}');
 $mpdf->SetFooter(array(
     'L' => array(
