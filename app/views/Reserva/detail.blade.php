@@ -21,7 +21,7 @@ NUEVA RESERVA
                     <li class="list-group-item"><strong>Descripción: </strong><?php echo $Habitacion->tipoHabitacion->descripcion; ?></li>
                     <li class="list-group-item"><strong>Seleccione Precio : </strong>
                         <ul class="list-group">
-                            <input type="hidden" id="id_moneda" name="id_moneda" value="">
+                            {{ Form::hidden('id_moneda','',['class'=>'form-control','id'=>'id_moneda'])}}                            
                             <span class="error">{{ $errors->first('id_precio')}}</span>
                             <?php
                             $c = 0;
@@ -69,8 +69,8 @@ NUEVA RESERVA
                     {{Form::label('id_cliente', 'Cliente')}} 
                     <a href="{{URL::to('cliente/nuevo')}}" id="nuevo-cliente"><span class="glyphicon glyphicon-plus"></span></a>
                     <!---custom autocompletar   -->
-                    <input type="text" name="cliente" id="cliente" rel="{{URL::to('reservaciones/cliente/autocompletar')}}" class="form-control ui-autocomplete-input" autocomplete="off">                                    
-                    <input type="hidden" value="" name="id_cliente" id="id_cliente" >
+                    {{ Form::text('cliente','',['class'=>'form-control','id'=>'cliente','autocomplete'=>'off','rel'=>URL::to('reservaciones/cliente/autocompletar')])}}
+                    {{ Form::hidden('id_cliente','',['class'=>'form-control','id'=>'id_cliente'])}}
                     <span class="error">{{ $errors->first('id_cliente')}}</span>
                     <!---------------------------------->
                     <div >
@@ -79,7 +79,7 @@ NUEVA RESERVA
                     </div>
                 </div>
                 <div class="col-sm-9">   
-                    <input type="hidden" name="dias" id="dias" value="0" >
+                    {{ Form::hidden('dias','',['class'=>'form-control','id'=>'dias'])}}
                     <div class="col-sm-6" id="caledar-visible1">
                         {{Form::label('fecha_entrada', 'Ingreso')}}
                         {{ Form::hidden('fecha_entrada','',['class'=>'form-control','id'=>'date-start'])}}

@@ -158,7 +158,7 @@ $(document).ready(function() {
     });
 
     $('body').on('click', '#cobrar', function(e) {
-        e.preventDefault()
+        e.preventDefault();
         var thisObj = $(this);
         var data = $('#custom-form').serialize();
         var url = thisObj.attr('href');
@@ -181,6 +181,20 @@ $(document).ready(function() {
                 if (data === 'ok') {
                     thisObj.parent().parent().remove();
                 }
+            }).complete(function() {
+                $('.custom-loading').hide();
+            });
+        }
+    });
+    $('body').on('click', '.pasar-cuenta', function(e) {
+        e.preventDefault();
+        var thisObj = $(this);
+        var url = thisObj.attr('href');
+        var status = confirm("¿Está seguro de pasar a una Cuenta por Cobrar?");
+        if (status) {
+            $('.custom-loading').show();
+            $.get(url, function(data) {
+                thisObj.parent().parent().empty().append(data);
             }).complete(function() {
                 $('.custom-loading').hide();
             });

@@ -5,6 +5,7 @@ $objMoneda = Moneda::find($ObjPrecio->id_moneda);
 $objCliente = Cliente::find($Reserva->id_cliente);
 ?>
 <td><?php echo '# ' . $Habitacion->nro; ?></td>
+<td><?php echo $Habitacion->tipoHabitacion->nombre; ?></td>
 <td><?php echo $objCliente->nombre . ' ' . $objCliente->apellidoP . ' ' . $objCliente->apellidoM; ?></td>
 <td><?php echo $Reserva->fecha_entrada; ?></td>
 <td><?php echo $Reserva->fecha_salida; ?></td>
@@ -36,17 +37,23 @@ $objCliente = Cliente::find($Reserva->id_cliente);
 <td><?php echo $objMoneda->simbolo; ?></td> 
 <td>
     <?php
-    if ($monto < $Reserva->total) {
+    if (count($Reserva->cuentaPorCobrar) > 0) {
         ?>
-        <a href="{{URL::to('reservaciones/realizar-cobro')}}/<?php echo $Reserva->id; ?>" class="realizar-cobro" title="Realizar Cobro" >
+        <i>Agregado a C/P </i> <br>
+        <a href="{{URL::to('reservaciones/liberar/'.$Reserva->id)}}" class="liberar" title="Liberar Habitación" >Liberar</a>
+        <?php
+    } elseif ($monto < $Reserva->total) {
+        ?>
+        <a href="{{URL::to('reservaciones/realizar-cobro/'.$Reserva->id)}}" class="realizar-cobro" title="Realizar Cobro" >
             <span class="glyphicon glyphicon-usd"></span>
-        </a>
+        </a><br>
+        <a href="{{URL::to('reservaciones/pasar-cuenta/'.$Reserva->id)}}" class="pasar-cuenta" title="Guardar en libro de cuentas" >
+            <span class=" glyphicon glyphicon-paperclip"></span>
+        </a>                            
         <?php
     } else {
         ?>
-        <a href="{{URL::to('reservaciones/liberar')}}/<?php echo $Reserva->id; ?>" class="liberar" title="Liberar Habitación" >
-            Liberar
-        </a>
+        <a href="{{URL::to('reservaciones/liberar/'.$Reserva->id)}}" class="liberar" title="Liberar Habitación" >Liberar</a>
         <?php
     }
     ?>

@@ -65,20 +65,27 @@ LISTADO DE RESERVAS
                     <td><?php echo $objMoneda->simbolo; ?></td> 
                     <td>
                         <?php
-                        if ($monto < $rowR->total) {
+                        if (count($rowR->cuentaPorCobrar) > 0) {
                             ?>
-                            <a href="{{URL::to('reservaciones/realizar-cobro')}}/<?php echo $rowR->id; ?>" class="realizar-cobro" title="Realizar Cobro" >
+                            <i>Agregado a C/P </i> <br>
+                            <a href="{{URL::to('reservaciones/liberar/'.$rowR->id)}}" class="liberar" title="Liberar Habitación" >Liberar</a>
+                            <?php
+                        } elseif ($monto < $rowR->total) {
+                            ?>
+                            <a href="{{URL::to('reservaciones/realizar-cobro/'.$rowR->id)}}" class="realizar-cobro" title="Realizar Cobro" >
                                 <span class="glyphicon glyphicon-usd"></span>
-                            </a>
+                            </a><br>
+                            <a href="{{URL::to('reservaciones/pasar-cuenta/'.$rowR->id)}}" class="pasar-cuenta" title="Guardar en libro de cuentas" >
+                                <span class=" glyphicon glyphicon-paperclip"></span>
+                            </a>                            
                             <?php
                         } else {
                             ?>
-                            <a href="{{URL::to('reservaciones/liberar')}}/<?php echo $rowR->id; ?>" class="liberar" title="Liberar Habitación" >
-                                Liberar
-                            </a>
+                            <a href="{{URL::to('reservaciones/liberar/'.$rowR->id)}}" class="liberar" title="Liberar Habitación" >Liberar</a>
                             <?php
                         }
                         ?>
+
                     </td>
                 </tr>
                 <?php

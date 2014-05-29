@@ -38,14 +38,15 @@ Route::resource('administracion/habitacion', 'HabitacionController');
 Route::resource('administracion/tipo-habitacion', 'TipoHabitacionController');
 Route::resource('reservaciones', 'ReservaController');
 Route::resource('reservaciones/detail', 'ReservaController@saveReservation');
-Route::get('reservaciones/realizar-cobro/{id_reserva}', 'ReservaController@realizarCobro');
-Route::post('reservaciones/cobrar/{id_reserva}', 'ReservaController@confirmarCobro');
-Route::get('reservaciones/liberar/{id_reserva}', 'ReservaController@liberar');
 
 /* * ****************pticiones ajax************************ */
 Route::resource('sistema/parametros/moneda', 'MonedaController');
 Route::get('administracion/moneda/{numPrices}', 'MonedaController@getList');
 Route::get('administracion/tipo-habitacion/delete/price/{idprecio}', 'PrecioController@deletePrecio');
+Route::get('reservaciones/realizar-cobro/{id_reserva}', 'ReservaController@realizarCobro');
+Route::post('reservaciones/cobrar/{id_reserva}', 'ReservaController@confirmarCobro');
+Route::get('reservaciones/liberar/{id_reserva}', 'ReservaController@liberar');
+Route::get('reservaciones/pasar-cuenta/{id_reserva}', 'CuentaPorCobrarController@guardar');
 /* * **************************************************************** */
 
 /* * **********reportes******************* */

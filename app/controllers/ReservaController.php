@@ -10,10 +10,6 @@ class ReservaController extends \BaseController {
         'id_habitacion' => 'Required',
         'id_precio' => 'Required'
     );
-//    private $message = array(
-//        'required' => 'Campo Obligatorio',
-//        'numeric' => 'Solo Números'
-//    );
     private $concepto = array(
         'pendiente' => 'Queda Saldo pendiente de Cobro',
         'cancelado' => 'Sin cobros pendientes'

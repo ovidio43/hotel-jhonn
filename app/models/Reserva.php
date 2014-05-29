@@ -15,5 +15,8 @@ class Reserva extends Eloquent {
     public function pago() {
         return $this->hasMany('Pago', 'id_reserva');
     }
+    public function cuentaPorCobrar() {
+        return $this->hasMany('CuentaPorCobrar', 'id_reserva');
+    }
 
 }
